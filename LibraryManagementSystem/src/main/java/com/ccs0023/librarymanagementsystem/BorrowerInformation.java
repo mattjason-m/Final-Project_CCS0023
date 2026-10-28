@@ -1,4 +1,6 @@
 package com.ccs0023.librarymanagementsystem;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -37,10 +39,13 @@ public class BorrowerInformation {
         } while(true);
     }
     
+    
+    
+    
     public void addBorrower(){
         
         BorrowersManagement registeredBorrower = new BorrowersManagement();
-        
+        //for class
         System.out.println("Enter Borrower ID Number: ");
         int BorrowerIdNumber = scan.nextInt();
         registeredBorrower.setBorrowerIdNumber(BorrowerIdNumber);
@@ -83,12 +88,15 @@ public class BorrowerInformation {
         
         System.out.println("Enter Address: ");
         String address = scan.nextLine();
-        
+       
         registeredBorrower.setAddress(address);
         
+        //for file
+        registeredBorrower.setRecord(BorrowerIdNumber, firstName, middleName, lastName, gender, birthday, contactNumber, email, address);
         borrower.add(registeredBorrower);
         
         System.out.println("New borrower has been successfully added to the system.");
+        
     }
     
     public void editBorrower(){
