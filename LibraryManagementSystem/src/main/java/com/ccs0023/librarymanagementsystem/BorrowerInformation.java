@@ -97,9 +97,53 @@ public class BorrowerInformation {
     
     public void deleteBorrower(){
         
+        System.out.println("Enter Borrower's ID");
+        int borrowerIdNumber = scan.nextInt();
+        scan.nextLine();
+            
+        BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
+        
+        if (registeredBorrower != null){
+            borrower.remove(registeredBorrower);
+            System.out.println("Borrowe has been successfully removed and no longer exixts.");
+            }
+        
+        else{
+            System.out.println("Borrower does not exists.");
+        }
+        
     }
     
     public void viewBorrower(){
+        
+        // We decided for the viewBorrower have another option, which is to view all the borrowers and to view a specific borrower by searching for their id
+        
+        int choice;
+        
+        do{
+            System.out.println("View Borrower\n");
+            System.out.println("1. View All Borrower");
+            System.out.println("2. View Specific Borrower");
+            System.out.println("3. Return to Borrowers Management");
+            choice = scan.nextInt();
+            
+            switch(choice){
+                case 1:
+                    viewAllBorrower();
+                    break;
+                case 2:
+                    viewSpecificBorrower();
+                    break;
+                case 3:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid choice from 1 to 3.");
+            }
+        }while(true);
+        
+    }
+    
+    public void viewAllBorrower(){
         
         System.out.println("All Records of Registered Borrowers");
         
@@ -115,12 +159,50 @@ public class BorrowerInformation {
             System.out.println(registeredBorrower.getEmail());
             System.out.println(registeredBorrower.getAddress());
             System.out.println(registeredBorrower.getViolations());
-    }
+        }   
+    }       
+            
+    public BorrowersManagement searchBorrower(int borrowerIdNumber){
         
+        for (BorrowersManagement registeredBorrower : borrower){
+            
+            if (borrowerIdNumber == registeredBorrower.getBorrowerIdNumber()){
+            return registeredBorrower;
+            }
+        }
+        
+         return null;  
     }
+    
+    public void viewSpecificBorrower(){
+        
+        System.out.println("Enter Borrower's ID: ");
+        int borrowerIdNumber = scan.nextInt();
+        scan.nextLine();
+        
+        BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
+        
+        if (registeredBorrower != null){
+            
+            System.out.println(registeredBorrower.getBorrowerIdNumber());
+            System.out.println(registeredBorrower.getFirstName());
+            System.out.println(registeredBorrower.getMiddleName());
+            System.out.println(registeredBorrower.getLastName());
+            System.out.println(registeredBorrower.getGender());
+            System.out.println(registeredBorrower.getBirthday());
+            System.out.println(registeredBorrower.getContactNumber());
+            System.out.println(registeredBorrower.getEmail());
+            System.out.println(registeredBorrower.getAddress());
+            System.out.println(registeredBorrower.getViolations());
+        }
+        
+        else {
+            System.out.println("Borrower does not exists.");
+        }
+        
 
+    }
     
     
-    
-    
+
 }
