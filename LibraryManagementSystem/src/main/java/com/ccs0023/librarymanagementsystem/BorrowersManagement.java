@@ -1,6 +1,10 @@
 package com.ccs0023.librarymanagementsystem;
 //borrower ID number, first name, middle name, last name, gender, birthday, contact number, email, address, and number of violations.
 
+import java.io.FileWriter;
+import java.io.IOException;
+
+
 public class BorrowersManagement {
        private int BorrowerIdNumber;
        private String firstName;
@@ -104,5 +108,21 @@ public class BorrowersManagement {
         
         public void addViolation(){
             violations++;
+        }
+        
+        
+        public void setRecord(int enteredID, String enteredFName, String enteredMName, String enteredLName, 
+                String enteredGender, String enteredBirthday, String enteredContactNumber,String enteredEmail, String enteredAddress){
+            try {
+                FileWriter writer = new FileWriter("borrowers_information.txt", true);
+                writer.write(String.join(",", String.valueOf(enteredID), enteredFName, enteredMName, enteredLName, 
+                        enteredGender, enteredBirthday, enteredContactNumber, enteredEmail, enteredAddress));
+                writer.write("\n");
+                writer.close();
+            }   
+            catch (IOException e) {
+                System.out.println("File error: " + e.getMessage());
+            }
+                System.out.print("test");
         }
 }
