@@ -15,6 +15,7 @@ public class BorrowerInformation {
             System.out.println("2. Edit Borrower");
             System.out.println("3. Delete Borrower");
             System.out.println("4. View Borrower");
+            System.out.println("5. Return to Main Menu");
             choice = scan.nextInt();
             
             switch(choice){
@@ -30,6 +31,8 @@ public class BorrowerInformation {
                 case 4:
                     viewBorrower();
                     break;
+                case 5:
+                    return;
                 default:
                     System.out.println("Invalid choice. Please enter a valid choice.");
             }
@@ -92,12 +95,96 @@ public class BorrowerInformation {
     }
     
     public void editBorrower(){
+           
+        System.out.println("Enter Borrower ID Number to be Edited");
+        int borrowerIdNumber = scan.nextInt();
+        scan.nextLine();
         
+        BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
+        
+        if (registeredBorrower != null){
+            do{
+                System.out.println("Edit Borrower Information");
+                System.out.println("Borrower ID: " + borrowerIdNumber);
+                System.out.println("\n 1. Edit First Name");
+                System.out.println("2. Edit Middle Name");
+                System.out.println("3. Edit Last Name");
+                System.out.println("4. Edit Gender");
+                System.out.println("5. Edit Birthday");
+                System.out.println("6. Edit Contact Number");
+                System.out.println("7. Edit Email");
+                System.out.println("8. Edit Address");
+                System.out.println("9. Return to Borrower Management");
+                
+                int choice;
+                System.out.println("Enter Choice: ");
+                choice = scan.nextInt();
+                scan.nextLine();
+                
+                switch(choice){
+                    case 1:
+                        System.out.println("Edit First Name: ");
+                        String firstName = scan.nextLine();
+                        registeredBorrower.setFirstName(firstName);
+                        System.out.println("First Name has been updated successfully.");
+                        break;
+                    case 2:
+                        System.out.println("Edit Middle Name: ");
+                        String middleName = scan.nextLine();
+                        registeredBorrower.setMiddleName(middleName);
+                        System.out.println("Middle Name has been updated successfully.");
+                        break;
+                    case 3:
+                        System.out.println("Edit Last Name: ");
+                        String lastName = scan.nextLine();
+                        registeredBorrower.setLastName(lastName);
+                        System.out.println("Last Name has been updated successfully.");
+                        break;
+                    case 4:
+                        System.out.println("Edit Gender: ");
+                        String gender = scan.nextLine();
+                        registeredBorrower.setGender(gender);
+                        System.out.println("Gender has been updated successfully.");
+                        break;
+                    case 5:
+                        System.out.println("Edit Birthday: ");
+                        String birthday = scan.nextLine();
+                        registeredBorrower.setBirthday(birthday);
+                        System.out.println("Birthday has been updated successfully.");
+                        break;
+                    case 6:
+                        System.out.println("Edit Contact Number: ");
+                        String contactNumber = scan.nextLine();
+                        registeredBorrower.setContactNumber(contactNumber);
+                        System.out.println("Contact Number has been updated successfully.");
+                        break;
+                    case 7:
+                        System.out.println("Edit Email: ");
+                        String email = scan.nextLine();
+                        registeredBorrower.setEmail(email);
+                        System.out.println("Email has been updated successfully.");
+                        break;
+                    case 8:
+                        System.out.println("Edit Address: ");
+                        String address = scan.nextLine();
+                        registeredBorrower.setAddress(address);
+                        System.out.println("Address has been updated successfully.");
+                        break;
+                    case 9:
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please enter a valid choice from 1 to 9");      
+                }
+            }while(true);
+        }
+        else {
+            System.out.println("Borrower does not exists");
+        }
     }
     
     public void deleteBorrower(){
         
-        System.out.println("Enter Borrower's ID");
+        System.out.println("Enter Borrower ID Number to be Deleted");
         int borrowerIdNumber = scan.nextInt();
         scan.nextLine();
             
@@ -105,7 +192,7 @@ public class BorrowerInformation {
         
         if (registeredBorrower != null){
             borrower.remove(registeredBorrower);
-            System.out.println("Borrowe has been successfully removed and no longer exixts.");
+            System.out.println("Borrower has been successfully removed and no longer exixts.");
             }
         
         else{
@@ -176,7 +263,7 @@ public class BorrowerInformation {
     
     public void viewSpecificBorrower(){
         
-        System.out.println("Enter Borrower's ID: ");
+        System.out.println("Enter Borrower's ID to view: ");
         int borrowerIdNumber = scan.nextInt();
         scan.nextLine();
         
