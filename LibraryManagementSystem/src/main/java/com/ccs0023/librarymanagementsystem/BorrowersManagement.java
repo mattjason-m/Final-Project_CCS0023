@@ -112,17 +112,21 @@ public class BorrowersManagement {
         
         
         public void setRecord(int enteredID, String enteredFName, String enteredMName, String enteredLName, 
-                String enteredGender, String enteredBirthday, String enteredContactNumber,String enteredEmail, String enteredAddress){
-            try {
-                FileWriter writer = new FileWriter("borrowers_information.txt", true);
-                writer.write(String.join(",", String.valueOf(enteredID), enteredFName, enteredMName, enteredLName, 
-                        enteredGender, enteredBirthday, enteredContactNumber, enteredEmail, enteredAddress));
-                writer.write("\n");
-                writer.close();
-            }   
-            catch (IOException e) {
-                System.out.println("File error: " + e.getMessage());
-            }
-                System.out.print("test");
+                String enteredGender, String enteredBirthday, String enteredContactNumber,String enteredEmail, String enteredAddress)
+        {
+            BorrowerIdNumber = enteredID;
+            firstName = enteredFName;
+            middleName = enteredMName;
+            lastName = enteredLName;
+            gender = enteredGender;
+            birthday = enteredBirthday;
+            contactNumber = enteredContactNumber;
+            email = enteredEmail;
+            address = enteredAddress;
+            violations = 0;
+            
+            FileHandler FILE = new FileHandler();
+            FILE.addBorrower(String.join(",", String.valueOf(enteredID), enteredFName, enteredMName, enteredLName, 
+                        enteredGender, enteredBirthday, enteredContactNumber, enteredEmail, enteredAddress, String.valueOf(violations)));  
         }
 }
