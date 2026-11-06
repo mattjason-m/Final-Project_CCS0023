@@ -8,10 +8,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileHandler {
+    public void FileHandler(){}
     
     public void readFile(String filename) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
+                
             reader.close();
         }catch(FileNotFoundException e){
             System.out.println("File Not Found");
@@ -24,6 +26,7 @@ public class FileHandler {
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
             writer.append(data);
+            writer.newLine();
             writer.close();
         }catch(FileNotFoundException e){
             System.out.println("File Not Found");
