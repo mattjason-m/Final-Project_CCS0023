@@ -17,7 +17,7 @@ public class Validator {
             return false;
         }
 
-        if (name.matches("[a-zA-Z .'-]+")){
+        if (name.matches("[A-Z .'-]+")){
             return true;
         }
         else{
@@ -27,10 +27,10 @@ public class Validator {
 
     public static boolean Gender(String gender){
 
-        if (gender.equalsIgnoreCase("Male")){
+        if (gender.equalsIgnoreCase("MALE")){
             return true;
         }
-        else if (gender.equalsIgnoreCase("Female")){
+        else if (gender.equalsIgnoreCase("FEMALE")){
             return true;
         }
         else{
@@ -106,8 +106,11 @@ public class Validator {
         if (address.trim().isEmpty()){
             return false;
         }
-        else{
+        if (address.matches("[A-Z#*0-9 -]")){
             return true;
+        }
+        else{
+            return false;
         }
     }
     
