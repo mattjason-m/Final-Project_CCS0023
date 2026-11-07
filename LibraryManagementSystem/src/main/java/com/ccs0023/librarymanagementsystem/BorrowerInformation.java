@@ -1,6 +1,7 @@
 package com.ccs0023.librarymanagementsystem;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class BorrowerInformation {
     
@@ -9,15 +10,18 @@ public class BorrowerInformation {
     int choice;
     
     public void borrower(){
-        
-        do{
-            System.out.println("1. Add Borrower");
-            System.out.println("2. Edit Borrower");
-            System.out.println("3. Delete Borrower");
-            System.out.println("4. View Borrower");
-            System.out.println("5. Return to Main Menu");
+
+    do{
+        System.out.println("1. Add Borrower");
+        System.out.println("2. Edit Borrower");
+        System.out.println("3. Delete Borrower");
+        System.out.println("4. View Borrower");
+        System.out.println("5. Return to Main Menu");
+
+        try{
             choice = scan.nextInt();
-            
+            scan.nextLine();
+
             switch(choice){
                 case 1:
                     addBorrower();
@@ -36,18 +40,32 @@ public class BorrowerInformation {
                 default:
                     System.out.println("Invalid choice. Please enter a valid choice.");
             }
-            
-        } while(true);
-    }
+        }
+        catch(InputMismatchException e){
+            System.out.println("Invalid input. Please enter a number.");
+            scan.nextLine();
+        }
+
+    }while(true);
+}
     
    
 public void addBorrower(){
 
     BorrowersManagement registeredBorrower = new BorrowersManagement();
 
-    System.out.println("Enter Borrower ID Number: ");
-    int BorrowerIdNumber = scan.nextInt();
-    scan.nextLine();
+    int BorrowerIdNumber;
+
+    try{
+        System.out.println("Enter Borrower ID Number: ");
+        BorrowerIdNumber = scan.nextInt();
+        scan.nextLine();
+    }
+    catch(InputMismatchException e){
+        System.out.println("Invalid input. Please enter a valid Borrower ID Number.");
+        scan.nextLine();
+        return;
+}
 
     if (validatePositiveNumber(BorrowerIdNumber) == false){
         System.out.println("Invalid Borrower ID Number.");
@@ -157,9 +175,18 @@ public void addBorrower(){
     
 public void editBorrower(){
 
-    System.out.println("Enter Borrower ID Number to be Edited");
-    int borrowerIdNumber = scan.nextInt();
-    scan.nextLine();
+    int borrowerIdNumber;
+
+    try{
+        System.out.println("Enter Borrower ID Number to be Edited");
+        borrowerIdNumber = scan.nextInt();
+        scan.nextLine();
+    }
+    catch(InputMismatchException e){
+        System.out.println("Invalid input. Please enter a valid Borrower ID Number.");
+        scan.nextLine();
+        return;
+}
 
     BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
 
@@ -178,9 +205,17 @@ public void editBorrower(){
             System.out.println("9. Return to Borrower Management");
 
             int choice;
-            System.out.println("Enter Choice: ");
-            choice = scan.nextInt();
-            scan.nextLine();
+
+            try{
+                System.out.println("Enter Choice: ");
+                choice = scan.nextInt();
+                scan.nextLine();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Invalid input. Please enter a number from 1 to 9.");
+                scan.nextLine();
+                continue;
+            }
 
             switch(choice){
                 case 1:
@@ -331,9 +366,18 @@ public void editBorrower(){
     
     public void deleteBorrower(){
         
-        System.out.println("Enter Borrower ID Number to be Deleted");
-        int borrowerIdNumber = scan.nextInt();
-        scan.nextLine();
+        int borrowerIdNumber;
+
+        try{
+            System.out.println("Enter Borrower ID Number to be Deleted");
+            borrowerIdNumber = scan.nextInt();
+            scan.nextLine();
+        }
+        catch(InputMismatchException e){
+            System.out.println("Invalid input. Please enter a valid Borrower ID Number.");
+            scan.nextLine();
+            return;
+        }
             
         BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
         
@@ -359,7 +403,16 @@ public void editBorrower(){
             System.out.println("1. View All Borrower");
             System.out.println("2. View Specific Borrower");
             System.out.println("3. Return to Borrowers Management");
+            
+            try{
             choice = scan.nextInt();
+            scan.nextLine();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Invalid input. Please enter a number from 1 to 3.");
+                scan.nextLine();
+                continue;
+            }
             
             switch(choice){
                 case 1:
@@ -410,9 +463,18 @@ public void editBorrower(){
     
     public void viewSpecificBorrower(){
         
-        System.out.println("Enter Borrower's ID to view: ");
-        int borrowerIdNumber = scan.nextInt();
-        scan.nextLine();
+        int borrowerIdNumber;
+
+        try{
+            System.out.println("Enter Borrower's ID to view: ");
+            borrowerIdNumber = scan.nextInt();
+            scan.nextLine();
+        }
+        catch(InputMismatchException e){
+            System.out.println("Invalid input. Please enter a valid Borrower ID Number.");
+            scan.nextLine();
+            return;
+        }
         
         BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
         
