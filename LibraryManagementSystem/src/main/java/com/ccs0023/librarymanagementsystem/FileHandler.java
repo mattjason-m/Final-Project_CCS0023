@@ -46,8 +46,9 @@ public class FileHandler {
     }
     
     public void updateFile(String filename, String uniqueID, String newData) {
-    ArrayList<String> records = readFile(filename);
-        for (int i = 0; i < records.size(); i++) {
+        ArrayList<String> records = readFile(filename);
+        int size = records.size();
+        for (int i = 0; i < size; i++) {
             String record = records.get(i);
             String[] values = record.split(",");
             if (values[0].equals(uniqueID)) {
