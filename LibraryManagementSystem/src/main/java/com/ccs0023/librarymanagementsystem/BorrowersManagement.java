@@ -102,11 +102,15 @@ public class BorrowersManagement {
             address = enteredAddress;
         }
         
+        public void setViolations(int enteredViolations) {
+            violations = enteredViolations;
+        }
+        
         public void addViolation(){
             violations++;
         }
         
-        public void SetRecord(){
+        public void AddRecord(){
 
             FileHandler FILE = new FileHandler();
             FILE.addBorrower(String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
@@ -114,7 +118,7 @@ public class BorrowersManagement {
             
         }
         
-        public void setRecord(int enteredID, String enteredFName, String enteredMName, String enteredLName, 
+        public void AddRecord(int enteredID, String enteredFName, String enteredMName, String enteredLName, 
                 String enteredGender, String enteredBirthday, String enteredContactNumber,String enteredEmail, String enteredAddress)
         {
             BorrowerIdNumber = enteredID;
@@ -132,4 +136,17 @@ public class BorrowersManagement {
             FILE.addBorrower(String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
             birthday,contactNumber, email, address, String.valueOf(violations)));
         }
+        public void UpdateRecord(int enteredID){
+            FileHandler FILE = new FileHandler();
+            
+            String changedData = String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
+                                birthday,contactNumber, email, address, String.valueOf(violations));
+            FILE.BorrowerUpdate(enteredID, changedData);
+        }
+        
+        public void DeleteRecord(int enteredID){
+            FileHandler FILE = new FileHandler();
+            FILE.BorrowerDelete(enteredID);
+        }
+        
 }
