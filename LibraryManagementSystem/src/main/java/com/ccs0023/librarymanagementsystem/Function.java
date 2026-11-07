@@ -1,0 +1,21 @@
+package com.ccs0023.librarymanagementsystem;
+
+public class Function {
+    public static void BorrowersPrintValues(BorrowersManagement registeredBorrower){
+            System.out.println(registeredBorrower.getBorrowerIdNumber());
+            System.out.println(registeredBorrower.getFirstName());
+            System.out.println(registeredBorrower.getMiddleName());
+            System.out.println(registeredBorrower.getLastName());
+            System.out.println(registeredBorrower.getGender());
+            System.out.println(registeredBorrower.getBirthday());
+            System.out.println(registeredBorrower.getContactNumber());
+            System.out.println(registeredBorrower.getEmail());
+            System.out.println(registeredBorrower.getAddress());
+            System.out.println(registeredBorrower.getViolations());
+    }
+    
+    public static String capitalizer (String input){
+        String Capitalized = input.toUpperCase();
+        return Capitalized;
+    }
+}

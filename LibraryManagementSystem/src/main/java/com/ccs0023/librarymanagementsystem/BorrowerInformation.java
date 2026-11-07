@@ -67,7 +67,7 @@ public void addBorrower(){
         return;
 }
 
-    if (validatePositiveNumber(BorrowerIdNumber) == false){
+    if (Validator.PositiveNumber(BorrowerIdNumber) == false){
         System.out.println("Invalid Borrower ID Number.");
         return;
     }
@@ -79,10 +79,11 @@ public void addBorrower(){
 
     registeredBorrower.setBorrowerIdNumber(BorrowerIdNumber);
 
+    
     System.out.println("Enter Firstname: ");
-    String firstName = scan.nextLine();
+    String firstName = Function.capitalizer(scan.nextLine());
 
-    if (validateName(firstName) == false){
+    if (Validator.Name(firstName) == false){
         System.out.println("Invalid First Name.");
         return;
     }
@@ -90,10 +91,10 @@ public void addBorrower(){
     registeredBorrower.setFirstName(firstName);
 
     System.out.println("Enter Middlename: ");
-    String middleName = scan.nextLine();
+    String middleName = Function.capitalizer(scan.nextLine());
 
     if (!middleName.trim().isEmpty()){
-        if (validateName(middleName) == false){
+        if (Validator.Name(middleName) == false){
             System.out.println("Invalid Middle Name.");
             return;
         }
@@ -102,9 +103,9 @@ public void addBorrower(){
     registeredBorrower.setMiddleName(middleName);
 
     System.out.println("Enter Lastname: ");
-    String lastName = scan.nextLine();
+    String lastName = Function.capitalizer(scan.nextLine());
 
-    if (validateName(lastName) == false){
+    if (Validator.Name(lastName) == false){
         System.out.println("Invalid Last Name.");
         return;
     }
@@ -112,9 +113,9 @@ public void addBorrower(){
     registeredBorrower.setLastName(lastName);
 
     System.out.println("Enter Gender: ");
-    String gender = scan.nextLine();
+    String gender = Function.capitalizer(scan.nextLine());
 
-    if (validateGender(gender) == false){
+    if (Validator.Gender(gender) == false){
         System.out.println("Invalid Gender.");
         return;
     }
@@ -124,7 +125,7 @@ public void addBorrower(){
     System.out.println("Enter birthday (YYYY-MM-DD): ");
     String birthday = scan.nextLine();
 
-    if (validateBirthday(birthday) == false){
+    if (Validator.Birthday(birthday) == false){
         System.out.println("Invalid Birthday.");
         return;
     }
@@ -139,7 +140,7 @@ public void addBorrower(){
     System.out.println("Enter Contact Number: ");
     String contactNumber = scan.nextLine();
 
-    if (validateContactNumber(contactNumber) == false){
+    if (Validator.ContactNumber(contactNumber) == false){
         System.out.println("Invalid Contact Number.");
         return;
     }
@@ -149,7 +150,7 @@ public void addBorrower(){
     System.out.println("Enter Email: ");
     String email = scan.nextLine();
 
-    if (validateEmail(email) == false){
+    if (Validator.Email(email) == false){
         System.out.println("Invalid Email.");
         return;
     }
@@ -157,21 +158,23 @@ public void addBorrower(){
     registeredBorrower.setEmail(email);
 
     System.out.println("Enter Address: ");
-    String address = scan.nextLine();
+    String address = Function.capitalizer(scan.nextLine());
 
-    if (validateAddress(address) == false){
+    if (Validator.Address(address) == false){
         System.out.println("Invalid Address.");
         return;
     }
 
     registeredBorrower.setAddress(address);
-
+    
     borrower.add(registeredBorrower);
-
+    registeredBorrower.SetRecord();
     System.out.println("New borrower has been successfully added to the system.");
 }
 
     
+
+
     
 public void editBorrower(){
 
@@ -222,7 +225,7 @@ public void editBorrower(){
                     System.out.println("Edit First Name: ");
                     String firstName = scan.nextLine();
 
-                    if (validateName(firstName) == false){
+                    if (Validator.Name(firstName) == false){
                         System.out.println("Invalid First Name.");
                         break;
                     }
@@ -242,7 +245,7 @@ public void editBorrower(){
                     String middleName = scan.nextLine();
 
                     if (!middleName.trim().isEmpty()){
-                        if (validateName(middleName) == false){
+                        if (Validator.Name(middleName) == false){
                             System.out.println("Invalid Middle Name.");
                             break;
                         }
@@ -262,7 +265,7 @@ public void editBorrower(){
                     System.out.println("Edit Last Name: ");
                     String lastName = scan.nextLine();
 
-                    if (validateName(lastName) == false){
+                    if (Validator.Name(lastName) == false){
                         System.out.println("Invalid Last Name.");
                         break;
                     }
@@ -282,7 +285,7 @@ public void editBorrower(){
                     System.out.println("Edit Gender: ");
                     String gender = scan.nextLine();
 
-                    if (validateGender(gender) == false){
+                    if (Validator.Gender(gender) == false){
                         System.out.println("Invalid Gender.");
                         break;
                     }
@@ -295,7 +298,7 @@ public void editBorrower(){
                     System.out.println("Edit Birthday (YYYY-MM-DD): ");
                     String birthday = scan.nextLine();
 
-                    if (validateBirthday(birthday) == false){
+                    if (Validator.Birthday(birthday) == false){
                         System.out.println("Invalid Birthday.");
                         break;
                     }
@@ -315,7 +318,7 @@ public void editBorrower(){
                     System.out.println("Edit Contact Number: ");
                     String contactNumber = scan.nextLine();
 
-                    if (validateContactNumber(contactNumber) == false){
+                    if (Validator.ContactNumber(contactNumber) == false){
                         System.out.println("Invalid Contact Number.");
                         break;
                     }
@@ -328,7 +331,7 @@ public void editBorrower(){
                     System.out.println("Edit Email: ");
                     String email = scan.nextLine();
 
-                    if (validateEmail(email) == false){
+                    if (Validator.Email(email) == false){
                         System.out.println("Invalid Email.");
                         break;
                     }
@@ -341,7 +344,7 @@ public void editBorrower(){
                     System.out.println("Edit Address: ");
                     String address = scan.nextLine();
 
-                    if (validateAddress(address) == false){
+                    if (Validator.Address(address) == false){
                         System.out.println("Invalid Address.");
                         break;
                     }
@@ -435,17 +438,7 @@ public void editBorrower(){
         System.out.println("All Records of Registered Borrowers");
         
         for (BorrowersManagement registeredBorrower : borrower){
-            
-            System.out.println(registeredBorrower.getBorrowerIdNumber());
-            System.out.println(registeredBorrower.getFirstName());
-            System.out.println(registeredBorrower.getMiddleName());
-            System.out.println(registeredBorrower.getLastName());
-            System.out.println(registeredBorrower.getGender());
-            System.out.println(registeredBorrower.getBirthday());
-            System.out.println(registeredBorrower.getContactNumber());
-            System.out.println(registeredBorrower.getEmail());
-            System.out.println(registeredBorrower.getAddress());
-            System.out.println(registeredBorrower.getViolations());
+            Function.BorrowersPrintValues(registeredBorrower);
         }   
     }       
             
@@ -479,17 +472,7 @@ public void editBorrower(){
         BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
         
         if (registeredBorrower != null){
-            
-            System.out.println(registeredBorrower.getBorrowerIdNumber());
-            System.out.println(registeredBorrower.getFirstName());
-            System.out.println(registeredBorrower.getMiddleName());
-            System.out.println(registeredBorrower.getLastName());
-            System.out.println(registeredBorrower.getGender());
-            System.out.println(registeredBorrower.getBirthday());
-            System.out.println(registeredBorrower.getContactNumber());
-            System.out.println(registeredBorrower.getEmail());
-            System.out.println(registeredBorrower.getAddress());
-            System.out.println(registeredBorrower.getViolations());
+            Function.BorrowersPrintValues(registeredBorrower);
         }
         
         else {
@@ -497,116 +480,6 @@ public void editBorrower(){
         }
         
 
-    }
-    
-    public boolean validatePositiveNumber(int number){
-
-        if (number > 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public boolean validateName(String name){
-
-        if (name.trim().isEmpty()){
-            return false;
-        }
-
-        if (name.matches("[a-zA-Z .'-]+")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public boolean validateGender(String gender){
-
-        if (gender.equalsIgnoreCase("Male")){
-            return true;
-        }
-        else if (gender.equalsIgnoreCase("Female")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public boolean validateBirthday(String birthday){
-
-        if (!birthday.matches("[0-9]{4}-[0-9]{2}-[0-9]{2}")){
-            return false;
-        }
-
-        String[] date = birthday.split("-");
-
-        int year = Integer.parseInt(date[0]);
-        int month = Integer.parseInt(date[1]);
-        int day = Integer.parseInt(date[2]);
-
-        if (year < 1900 || year > 2026){
-            return false;
-        }
-
-        if (month < 1 || month > 12){
-            return false;
-        }
-
-        int daysInMonth = 31;
-
-        if (month == 4 || month == 6 || month == 9 || month == 11){
-            daysInMonth = 30;
-        }
-        else if (month == 2){
-            daysInMonth = 28;
-
-            if (year % 400 == 0){
-                daysInMonth = 29;
-            }
-            else if (year % 4 == 0 && year % 100 != 0){
-                daysInMonth = 29;
-            }
-        }
-
-        if (day < 1 || day > daysInMonth){
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean validateContactNumber(String contactNumber){
-
-        if (contactNumber.matches("09[0-9]{9}")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public boolean validateEmail(String email){
-
-        if (email.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public boolean validateAddress(String address){
-
-        if (address.trim().isEmpty()){
-            return false;
-        }
-        else{
-            return true;
-        }
     }
 
     public boolean checkDuplicateBorrower(String firstName, String middleName,
