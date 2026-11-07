@@ -106,7 +106,7 @@ public class Validator {
         if (address.trim().isEmpty()){
             return false;
         }
-        if (address.matches("[A-Z#*0-9 -]")){
+        if (address.matches("[A-Z0-9 #.'/-]+")){
             return true;
         }
         else{

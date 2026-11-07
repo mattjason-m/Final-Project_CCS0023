@@ -90,18 +90,20 @@ public void addBorrower(){
 
     registeredBorrower.setFirstName(firstName);
 
-    System.out.println("Enter Middlename: ");
-    String middleName = Function.capitalizer(scan.nextLine());
+    
+    System.out.print("Enter Middle Name (Enter NONE if not applicable): ");
+    String middleName = Function.capitalizer(scan.nextLine().trim());
 
-    if (!middleName.trim().isEmpty()){
-        if (Validator.Name(middleName) == false){
-            System.out.println("Invalid Middle Name.");
-            return;
-        }
+    if (middleName.isEmpty() || middleName.equalsIgnoreCase("NONE")) {
+        middleName = "N/A";
+    } else if (Validator.Name(middleName) == false) {
+        System.out.println("Invalid Middle Name.");
+        return;
     }
 
-    registeredBorrower.setMiddleName(middleName);
+   registeredBorrower.setMiddleName(middleName);
 
+    
     System.out.println("Enter Lastname: ");
     String lastName = Function.capitalizer(scan.nextLine());
 
@@ -157,7 +159,7 @@ public void addBorrower(){
 
     registeredBorrower.setEmail(email);
 
-    System.out.println("Enter Address: ");
+    System.out.println("Enter Address: Separate by spaces not commas)");
     String address = Function.capitalizer(scan.nextLine());
 
     if (Validator.Address(address) == false){
@@ -168,12 +170,9 @@ public void addBorrower(){
     registeredBorrower.setAddress(address);
     
     borrower.add(registeredBorrower);
-    registeredBorrower.SetRecord();
+    registeredBorrower.AddRecord();
     System.out.println("New borrower has been successfully added to the system.");
 }
-
-    
-
 
     
 public void editBorrower(){
@@ -223,133 +222,142 @@ public void editBorrower(){
             switch(choice){
                 case 1:
                     System.out.println("Edit First Name: ");
-                    String firstName = scan.nextLine();
+                    String changedfirstName = Function.capitalizer(scan.nextLine());
 
-                    if (Validator.Name(firstName) == false){
+                    if (Validator.Name(changedfirstName) == false){
                         System.out.println("Invalid First Name.");
                         break;
                     }
 
-                    if (checkDuplicateBorrower(firstName, registeredBorrower.getMiddleName(),
+                    if (checkDuplicateBorrower(changedfirstName, registeredBorrower.getMiddleName(),
                             registeredBorrower.getLastName(), registeredBorrower.getBirthday(), borrowerIdNumber)){
                         System.out.println("Borrower is already registered.");
                         break;
                     }
 
-                    registeredBorrower.setFirstName(firstName);
+                    registeredBorrower.setFirstName(changedfirstName); // update to RAM
+                    registeredBorrower.UpdateRecord(borrowerIdNumber); // update to text file
                     System.out.println("First Name has been updated successfully.");
                     break;
 
                 case 2:
                     System.out.println("Edit Middle Name: ");
-                    String middleName = scan.nextLine();
+                    String changedmiddleName = Function.capitalizer(scan.nextLine());
 
-                    if (!middleName.trim().isEmpty()){
-                        if (Validator.Name(middleName) == false){
+                    if (!changedmiddleName.trim().isEmpty()){
+                        if (Validator.Name(changedmiddleName) == false){
                             System.out.println("Invalid Middle Name.");
                             break;
                         }
                     }
 
-                    if (checkDuplicateBorrower(registeredBorrower.getFirstName(), middleName,
+                    if (checkDuplicateBorrower(registeredBorrower.getFirstName(), changedmiddleName,
                             registeredBorrower.getLastName(), registeredBorrower.getBirthday(), borrowerIdNumber)){
                         System.out.println("Borrower is already registered.");
                         break;
                     }
 
-                    registeredBorrower.setMiddleName(middleName);
+                    registeredBorrower.setMiddleName(changedmiddleName);
+                    registeredBorrower.UpdateRecord(borrowerIdNumber); 
                     System.out.println("Middle Name has been updated successfully.");
                     break;
 
                 case 3:
                     System.out.println("Edit Last Name: ");
-                    String lastName = scan.nextLine();
+                    String changedlastName = Function.capitalizer(scan.nextLine());
 
-                    if (Validator.Name(lastName) == false){
+                    if (Validator.Name(changedlastName) == false){
                         System.out.println("Invalid Last Name.");
                         break;
                     }
 
                     if (checkDuplicateBorrower(registeredBorrower.getFirstName(),
-                            registeredBorrower.getMiddleName(), lastName,
+                            registeredBorrower.getMiddleName(), changedlastName,
                             registeredBorrower.getBirthday(), borrowerIdNumber)){
                         System.out.println("Borrower is already registered.");
+                        
                         break;
                     }
 
-                    registeredBorrower.setLastName(lastName);
-                    System.out.println("Last Name has been updated successfully.");
+                    registeredBorrower.setLastName(changedlastName);
+                    registeredBorrower.UpdateRecord(borrowerIdNumber); 
+                    System.out.println("Last Name has been updated successfully."); 
                     break;
 
                 case 4:
                     System.out.println("Edit Gender: ");
-                    String gender = scan.nextLine();
+                    String changedgender = Function.capitalizer(scan.nextLine());
 
-                    if (Validator.Gender(gender) == false){
+                    if (Validator.Gender(changedgender) == false){
                         System.out.println("Invalid Gender.");
                         break;
                     }
 
-                    registeredBorrower.setGender(gender);
-                    System.out.println("Gender has been updated successfully.");
+                    registeredBorrower.setGender(changedgender);
+                    registeredBorrower.UpdateRecord(borrowerIdNumber);
+                    System.out.println("Gender has been updated successfully.");                    
                     break;
 
                 case 5:
                     System.out.println("Edit Birthday (YYYY-MM-DD): ");
-                    String birthday = scan.nextLine();
+                    String changedbirthday = scan.nextLine();
 
-                    if (Validator.Birthday(birthday) == false){
+                    if (Validator.Birthday(changedbirthday) == false){
                         System.out.println("Invalid Birthday.");
                         break;
                     }
 
                     if (checkDuplicateBorrower(registeredBorrower.getFirstName(),
                             registeredBorrower.getMiddleName(), registeredBorrower.getLastName(),
-                            birthday, borrowerIdNumber)){
+                            changedbirthday, borrowerIdNumber)){
                         System.out.println("Borrower is already registered.");
                         break;
                     }
 
-                    registeredBorrower.setBirthday(birthday);
+                    registeredBorrower.setBirthday(changedbirthday);
+                    registeredBorrower.UpdateRecord(borrowerIdNumber);
                     System.out.println("Birthday has been updated successfully.");
                     break;
 
                 case 6:
                     System.out.println("Edit Contact Number: ");
-                    String contactNumber = scan.nextLine();
+                    String changedcontactNumber = scan.nextLine();
 
-                    if (Validator.ContactNumber(contactNumber) == false){
+                    if (Validator.ContactNumber(changedcontactNumber) == false){
                         System.out.println("Invalid Contact Number.");
                         break;
                     }
 
-                    registeredBorrower.setContactNumber(contactNumber);
+                    registeredBorrower.setContactNumber(changedcontactNumber);
+                    registeredBorrower.UpdateRecord(borrowerIdNumber);
                     System.out.println("Contact Number has been updated successfully.");
                     break;
 
                 case 7:
                     System.out.println("Edit Email: ");
-                    String email = scan.nextLine();
+                    String changedemail = scan.nextLine();
 
-                    if (Validator.Email(email) == false){
+                    if (Validator.Email(changedemail) == false){
                         System.out.println("Invalid Email.");
                         break;
                     }
 
-                    registeredBorrower.setEmail(email);
+                    registeredBorrower.setEmail(changedemail);
+                    registeredBorrower.UpdateRecord(borrowerIdNumber);
                     System.out.println("Email has been updated successfully.");
                     break;
 
                 case 8:
-                    System.out.println("Edit Address: ");
-                    String address = scan.nextLine();
+                    System.out.println("Edit Address (Separate by spaces not commas): ");
+                    String changedaddress = Function.capitalizer(scan.nextLine());
 
-                    if (Validator.Address(address) == false){
+                    if (Validator.Address(changedaddress) == false){
                         System.out.println("Invalid Address.");
                         break;
                     }
 
-                    registeredBorrower.setAddress(address);
+                    registeredBorrower.setAddress(changedaddress);
+                    registeredBorrower.UpdateRecord(borrowerIdNumber);
                     System.out.println("Address has been updated successfully.");
                     break;
 
@@ -367,10 +375,10 @@ public void editBorrower(){
 }
 
     
-    public void deleteBorrower(){
+public void deleteBorrower(){
         
         int borrowerIdNumber;
-
+   
         try{
             System.out.println("Enter Borrower ID Number to be Deleted");
             borrowerIdNumber = scan.nextInt();
@@ -385,9 +393,10 @@ public void editBorrower(){
         BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
         
         if (registeredBorrower != null){
-            borrower.remove(registeredBorrower);
+            borrower.remove(registeredBorrower); // delete in RAM
+            registeredBorrower.DeleteRecord(borrowerIdNumber); //delete in txt
             System.out.println("Borrower has been successfully removed and no longer exixts.");
-            }
+        }
         
         else{
             System.out.println("Borrower does not exists.");
@@ -396,116 +405,142 @@ public void editBorrower(){
     }
     
     public void viewBorrower(){
-        
-        // We decided for the viewBorrower have another option, which is to view all the borrowers and to view a specific borrower by searching for their id
-        
-        int choice;
-        
-        do{
-            System.out.println("View Borrower\n");
-            System.out.println("1. View All Borrower");
-            System.out.println("2. View Specific Borrower");
-            System.out.println("3. Return to Borrowers Management");
-            
-            try{
-            choice = scan.nextInt();
-            scan.nextLine();
-            }
-            catch(InputMismatchException e){
-                System.out.println("Invalid input. Please enter a number from 1 to 3.");
+
+            // We decided for the viewBorrower have another option, which is to view all the borrowers and to view a specific borrower by searching for their id
+
+            int choice;
+
+            do{
+                System.out.println("View Borrower\n");
+                System.out.println("1. View All Borrower");
+                System.out.println("2. View Specific Borrower");
+                System.out.println("3. Return to Borrowers Management");
+
+                try{
+                choice = scan.nextInt();
                 scan.nextLine();
-                continue;
-            }
-            
-            switch(choice){
-                case 1:
-                    viewAllBorrower();
-                    break;
-                case 2:
-                    viewSpecificBorrower();
-                    break;
-                case 3:
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please enter a valid choice from 1 to 3.");
-            }
-        }while(true);
-        
-    }
-    
+                }
+                catch(InputMismatchException e){
+                    System.out.println("Invalid input. Please enter a number from 1 to 3.");
+                    scan.nextLine();
+                    continue;
+                }
+
+                switch(choice){
+                    case 1:
+                        viewAllBorrower();
+                        break;
+                    case 2:
+                        viewSpecificBorrower();
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please enter a valid choice from 1 to 3.");
+                }
+            }while(true);
+
+        }
+
     public void viewAllBorrower(){
-        
-        System.out.println("All Records of Registered Borrowers");
-        
-        for (BorrowersManagement registeredBorrower : borrower){
-            Function.BorrowersPrintValues(registeredBorrower);
-        }   
-    }       
-            
+
+            System.out.println("All Records of Registered Borrowers");
+
+            for (BorrowersManagement registeredBorrower : borrower){
+                Function.BorrowersPrintValues(registeredBorrower);
+            }   
+        }       
+
     public BorrowersManagement searchBorrower(int borrowerIdNumber){
-        
-        for (BorrowersManagement registeredBorrower : borrower){
-            
-            if (borrowerIdNumber == registeredBorrower.getBorrowerIdNumber()){
-            return registeredBorrower;
-            }
-        }
-        
-         return null;  
-    }
-    
-    public void viewSpecificBorrower(){
-        
-        int borrowerIdNumber;
 
-        try{
-            System.out.println("Enter Borrower's ID to view: ");
-            borrowerIdNumber = scan.nextInt();
-            scan.nextLine();
-        }
-        catch(InputMismatchException e){
-            System.out.println("Invalid input. Please enter a valid Borrower ID Number.");
-            scan.nextLine();
-            return;
-        }
-        
-        BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
-        
-        if (registeredBorrower != null){
-            Function.BorrowersPrintValues(registeredBorrower);
-        }
-        
-        else {
-            System.out.println("Borrower does not exists.");
-        }
-        
+            for (BorrowersManagement registeredBorrower : borrower){
 
-    }
-
-    public boolean checkDuplicateBorrower(String firstName, String middleName,
-            String lastName, String birthday){
-
-        return checkDuplicateBorrower(firstName, middleName, lastName, birthday, -1);
-    }
-
-    public boolean checkDuplicateBorrower(String firstName, String middleName,
-            String lastName, String birthday, int borrowerIdNumber){
-
-        for (BorrowersManagement registeredBorrower : borrower){
-
-            if (registeredBorrower.getBorrowerIdNumber() != borrowerIdNumber){
-
-                if (firstName.trim().equalsIgnoreCase(registeredBorrower.getFirstName().trim())
-                        && middleName.trim().equalsIgnoreCase(registeredBorrower.getMiddleName().trim())
-                        && lastName.trim().equalsIgnoreCase(registeredBorrower.getLastName().trim())
-                        && birthday.equals(registeredBorrower.getBirthday())){
-
-                    return true;
+                if (borrowerIdNumber == registeredBorrower.getBorrowerIdNumber()){
+                return registeredBorrower;
                 }
             }
+            return null;  
         }
 
-        return false;
+    public void viewSpecificBorrower(){
+            int borrowerIdNumber;
+
+            try{
+                System.out.println("Enter Borrower's ID to view: ");
+                borrowerIdNumber = scan.nextInt();
+                scan.nextLine();
+            }
+            catch(InputMismatchException e){
+                System.out.println("Invalid input. Please enter a valid Borrower ID Number.");
+                scan.nextLine();
+                return;
+            }
+
+            BorrowersManagement registeredBorrower = searchBorrower(borrowerIdNumber);
+
+            if (registeredBorrower != null){
+                Function.BorrowersPrintValues(registeredBorrower);
+            }
+
+            else {
+                System.out.println("Borrower does not exists.");
+            }
+        }
+    
+    public boolean checkDuplicateBorrower(String firstName, String middleName,
+        String lastName, String birthday){
+
+            return checkDuplicateBorrower(firstName, middleName, lastName, birthday, -1);
+        }
+
+    public boolean checkDuplicateBorrower(String firstName, String middleName,
+                String lastName, String birthday, int borrowerIdNumber){
+        for (BorrowersManagement registeredBorrower : borrower){
+            if (registeredBorrower.getBorrowerIdNumber() != borrowerIdNumber){
+                if (firstName.trim().equalsIgnoreCase(registeredBorrower.getFirstName().trim())
+                    && middleName.trim().equalsIgnoreCase(registeredBorrower.getMiddleName().trim())
+                    && lastName.trim().equalsIgnoreCase(registeredBorrower.getLastName().trim())
+                    && birthday.equals(registeredBorrower.getBirthday()))
+                    {
+                    return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+    public void loadBorrowers() {
+        FileHandler file = new FileHandler();
+        ArrayList<String> records = file.readBorrower();
+        for (String record : records) {
+               try {
+                    String[] values = record.split(",");
+
+                    if (values.length != 10) {
+                        System.out.println("Invalid borrower record.");
+                        continue; 
+                    }
+                    BorrowersManagement registeredBorrower = new BorrowersManagement();
+
+                    registeredBorrower.setBorrowerIdNumber(Integer.parseInt(values[0]));
+                    registeredBorrower.setFirstName(values[1]);
+                    registeredBorrower.setMiddleName(values[2]);
+                    registeredBorrower.setLastName(values[3]);
+                    registeredBorrower.setGender(values[4]);
+                    registeredBorrower.setBirthday(values[5]);
+                    registeredBorrower.setContactNumber(values[6]);
+                    registeredBorrower.setEmail(values[7]);
+                    registeredBorrower.setAddress(values[8]);
+                    registeredBorrower.setViolations(Integer.parseInt(values[9]));
+
+                    borrower.add(registeredBorrower);
+               }
+                catch(NumberFormatException e) {
+                    System.out.println("Invalid number in borrower record.");
+                }
+        }
     }
-// hi world,
+    
+    
+    
 }
