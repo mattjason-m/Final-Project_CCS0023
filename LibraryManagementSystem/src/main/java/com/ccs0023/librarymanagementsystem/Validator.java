@@ -1,5 +1,6 @@
 package com.ccs0023.librarymanagementsystem;
 
+import java.time.LocalDateTime;
 public class Validator {
     
     public static boolean PositiveNumber(int number){
@@ -113,5 +114,37 @@ public class Validator {
             return false;
         }
     }
+     
+    public static boolean Year(int yearPublished){
+     
+        if (yearPublished > 868 && yearPublished <= Function.SetCurrentYear()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    } // initial year is based on the first book published Diamond Sutra source: University of Oxford. (n.d.). The world's earliest dated printed book: The Diamond Sutra (868 CE). Cabinet. https://www.cabinet.ox.ac.uk/worlds-earliest-dated-printed-book-diamond-sutra-868-ce
+ 
+    public static boolean Text(String text){
+        
+        if (text.trim().isEmpty()){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    
+    public static boolean NoComma(String title) {
+    if (title.trim().isEmpty()) {
+        return false;
+    }
+    if (title.contains(",")){
+        System.out.println("Use of ',' is not allowed.");
+        return false;
+    }
+    return true;
+    }
+    
     
 }

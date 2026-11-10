@@ -397,7 +397,6 @@ public void deleteBorrower(){
             registeredBorrower.DeleteRecord(borrowerIdNumber); //delete in txt
             System.out.println("Borrower has been successfully removed and no longer exixts.");
         }
-        
         else{
             System.out.println("Borrower does not exists.");
         }

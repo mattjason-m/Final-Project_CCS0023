@@ -120,9 +120,6 @@ public class FileHandler {
     public void readTransaction(){
         readFile("transactions.txt");
     }
-    public void readMatereials(){
-        readFile("materials.txt");
-    }
 
     public void addBorrower(String input){
         appendFile("borrowers.txt", input);
@@ -131,11 +128,24 @@ public class FileHandler {
     public void addTransaction(String input){
         appendFile("transactions.txt", input);
     }
+    
+    
+    //ASSET METHODS 
+    
+    public ArrayList<String> readMaterials(){
+        return readFile("materials.txt");
+    }
+    
     public void addMaterials(String input){
         appendFile("materials.txt", input);
     }   
     
+    public void MaterialsUpdate(int assetID, String valueEdited){
+        updateFile("materials.txt", assetID, valueEdited);
+    }
     
-    
+    public void MaterialsRemove(int assetID){
+        deleteFile("materials.txt", assetID);
+    }
 }
     
