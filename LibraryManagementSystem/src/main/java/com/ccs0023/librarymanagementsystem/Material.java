@@ -80,4 +80,107 @@ public abstract class Material {
     public abstract int getBorrowingDays();
     
     public abstract String getMaterialType();
+    
+    public void SaveToFile(){
+        FileHandler FILE = new FileHandler();
+        String material = getMaterialType();
+        if (material.equals("Book")
+                            ||material.equals("Thesis Book")){
+        FILE.addMaterials(String.join(",", String.valueOf(materialId), material, title, author, 
+                String.valueOf(yearPublished), publisher, String.valueOf(totalCopies), String.valueOf(availableCopies)));
+        }
+        else{
+            FILE.addMaterials(String.join(",", String.valueOf(materialId), material, title, 
+                String.valueOf(yearPublished), publisher, String.valueOf(totalCopies), String.valueOf(availableCopies)));
+        }
+    }
+    
+    public void UpdateAuthoredMaterial(int MaterialID, String type){
+        FileHandler FILE = new FileHandler();
+        
+        String ChangedData = String.join(",",String.valueOf(MaterialID), type, title, author, String.valueOf(yearPublished), publisher, String.valueOf(totalCopies), String.valueOf(availableCopies));
+        FILE.MaterialsUpdate(MaterialID, ChangedData);  
+    }
+    
+    public void UpdateUnauthoredMaterial(int MaterialID, String type){
+        FileHandler FILE = new FileHandler();
+        
+        String ChangedData = String.join(",",String.valueOf(MaterialID), type,title, String.valueOf(yearPublished), publisher, String.valueOf(totalCopies), String.valueOf(availableCopies));
+        FILE.MaterialsUpdate(MaterialID, ChangedData);  
+    }
+    
+    public void RemoveMaterial(int MaterialID){
+        FileHandler FILE = new FileHandler();
+        FILE.MaterialsRemove(MaterialID);
+    }
+    
+    
+}
+
+class Book extends Material {
+    
+    public Book(){
+        super();
+    }
+    
+    @Override
+    public int getBorrowingDays(){
+        return 7;
+    }
+    
+    @Override
+    public String getMaterialType(){
+        return "Book";
+    }
+}
+
+class Journal extends Material {
+    
+    public Journal(){
+        super();
+    }
+    
+    @Override
+    public int getBorrowingDays(){
+        return 3;
+    }
+    
+    @Override
+    public String getMaterialType(){
+        return "Journal";
+    }
+}
+
+class Magazine extends Material {
+    
+    public Magazine(){
+        super();
+    }
+    
+    @Override
+    public int getBorrowingDays(){
+        return 0;
+    }
+    
+    @Override
+    public String getMaterialType(){
+        return "Magazine";
+    }
+}
+
+class ThesisBook extends Material {
+    
+    public ThesisBook(){
+        super();
+    }
+    
+    @Override
+    public int getBorrowingDays(){
+        return 2;
+    }
+    
+    @Override
+    public String getMaterialType(){
+        return "Thesis Book";
+    }
 }
