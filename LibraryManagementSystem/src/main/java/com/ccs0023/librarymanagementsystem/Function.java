@@ -1,5 +1,7 @@
 package com.ccs0023.librarymanagementsystem;
 
+import java.time.LocalDateTime;
+
 public class Function {
     public static void BorrowersPrintValues(BorrowersManagement registeredBorrower){
             System.out.println(registeredBorrower.getBorrowerIdNumber());
@@ -18,4 +20,15 @@ public class Function {
         String Capitalized = input.toUpperCase();
         return Capitalized;
     }
+    
+    private static final LocalDateTime TIMESTAMP = LocalDateTime.now();
+    public static int SetCurrentYear(){
+      return TIMESTAMP.getYear();
+    }
+    
+    
+    
+    
+    
+    
 }
