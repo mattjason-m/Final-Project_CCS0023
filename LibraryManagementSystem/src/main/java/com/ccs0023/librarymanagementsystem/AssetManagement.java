@@ -312,11 +312,11 @@ public class AssetManagement {
                         break;
                         
                     case 3:
-                        int yearPublished;
+                        int ChangedYearPublished;
                         
                         try{
                             System.out.println("Edit Year Published: ");
-                            yearPublished = scan.nextInt();
+                            ChangedYearPublished = scan.nextInt();
                             scan.nextLine();
                         }
                         catch(InputMismatchException e){
@@ -325,13 +325,13 @@ public class AssetManagement {
                             break;
                         }
                         
-                        if (Validator.Year(yearPublished) == false){
+                        if (Validator.Year(ChangedYearPublished) == false){
                             System.out.println("Invalid Year Published.");
                             break;
                         }
                         
                         int oldYear = registeredMaterial.getYearPublished();
-                        registeredMaterial.setYearPublished(yearPublished);
+                        registeredMaterial.setYearPublished(ChangedYearPublished);
                         
                         if (checkDuplicateMaterial(registeredMaterial, materialId)){
                             registeredMaterial.setYearPublished(oldYear);
@@ -355,15 +355,15 @@ public class AssetManagement {
                         
                     case 4:
                         System.out.println("Edit Publisher: ");
-                        String publisher = scan.nextLine();
+                        String ChangedPublisher = scan.nextLine();
                         
-                        if (Validator.Text(publisher) == false){
+                        if (Validator.Text(ChangedPublisher) == false){
                             System.out.println("Invalid Publisher.");
                             break;
                         }
                         
                         String oldPublisher = registeredMaterial.getPublisher();
-                        registeredMaterial.setPublisher(publisher);
+                        registeredMaterial.setPublisher(ChangedPublisher);
                         
                         if (checkDuplicateMaterial(registeredMaterial, materialId)){
                             registeredMaterial.setPublisher(oldPublisher);
@@ -385,11 +385,11 @@ public class AssetManagement {
                         break;
                         
                     case 5:
-                        int totalCopies;
+                        int ChangedTotalCopies;
                         
                         try{
                             System.out.println("Edit Total Copies: ");
-                            totalCopies = scan.nextInt();
+                            ChangedTotalCopies = scan.nextInt();
                             scan.nextLine();
                         }
                         catch(InputMismatchException e){
@@ -401,18 +401,18 @@ public class AssetManagement {
                         int borrowedCopies = registeredMaterial.getTotalCopies()
                                 - registeredMaterial.getAvailableCopies();
                         
-                        if (Validator.PositiveNumber(totalCopies) == false){
+                        if (Validator.PositiveNumber(ChangedTotalCopies) == false){
                             System.out.println("Invalid Number of Copies.");
                             break;
                         }
                         
-                        if (totalCopies < borrowedCopies){
+                        if (ChangedTotalCopies < borrowedCopies){
                             System.out.println("Total Copies cannot be less than borrowed copies.");
                             break;
                         }
                         
-                        registeredMaterial.setTotalCopies(totalCopies);
-                        registeredMaterial.setAvailableCopies(totalCopies - borrowedCopies);
+                        registeredMaterial.setTotalCopies(ChangedTotalCopies);
+                        registeredMaterial.setAvailableCopies(ChangedTotalCopies - borrowedCopies);
                         
                         if (registeredMaterial.getMaterialType().equals("Book")
                             ||registeredMaterial.getMaterialType().equals("Thesis Book")){
