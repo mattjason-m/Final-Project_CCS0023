@@ -116,17 +116,9 @@ public class FileHandler {
     public ArrayList<String> readBorrower(){
         return readFile("borrowers.txt");
     }
-    
-    public void readTransaction(){
-        readFile("transactions.txt");
-    }
 
     public void addBorrower(String input){
         appendFile("borrowers.txt", input);
-    }
-    
-    public void addTransaction(String input){
-        appendFile("transactions.txt", input);
     }
     
     
@@ -147,5 +139,14 @@ public class FileHandler {
     public void MaterialsRemove(int assetID){
         deleteFile("materials.txt", assetID);
     }
-}
     
+    //TRANSACTION METHOD
+    public void addTransaction(String input){
+        appendFile("transactions.txt", input);
+    }
+    
+    public ArrayList<String> readTransactions(){
+        return readFile("transactions.txt");
+    }
+    
+}

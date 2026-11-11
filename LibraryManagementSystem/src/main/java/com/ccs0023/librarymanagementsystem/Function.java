@@ -22,8 +22,38 @@ public class Function {
     }
     
     private static final LocalDateTime TIMESTAMP = LocalDateTime.now();
+    
     public static int SetCurrentYear(){
       return TIMESTAMP.getYear();
+    }
+    
+    
+    public static String SetCurrentDate(){
+      return String.valueOf(TIMESTAMP);
+    }
+    
+    public static String SetDeadline(String MaterialType){
+         String TESTFINALVALUE;
+        switch(MaterialType){
+            case "Book":
+                TESTFINALVALUE = String.valueOf(TIMESTAMP.plusDays(7));
+                return TESTFINALVALUE;
+            case "Journal":
+                TESTFINALVALUE = String.valueOf(TIMESTAMP.plusDays(3));
+                return TESTFINALVALUE;
+            case "Magazine":
+                TESTFINALVALUE = String.valueOf(TIMESTAMP.with(java.time.LocalTime.MAX));
+                return TESTFINALVALUE;
+            case "Thesis Book":
+                TESTFINALVALUE = String.valueOf(TIMESTAMP.plusDays(2));
+                return TESTFINALVALUE;
+            default:
+                System.out.println("Invalid Material");
+                break;
+            
+        }
+        
+      return String.valueOf(TIMESTAMP);
     }
     
     

@@ -258,7 +258,7 @@ public class AssetManagement {
                         }
                         
                         String oldTitle = registeredMaterial.getTitle();
-                        registeredMaterial.setTitle(changedTitle);
+                        registeredMaterial.setTitle(changedTitle);//change in RAM
                         
                         if (checkDuplicateMaterial(registeredMaterial, materialId)){
                             registeredMaterial.setTitle(oldTitle);
@@ -270,12 +270,12 @@ public class AssetManagement {
                         if (registeredMaterial.getMaterialType().equals("Book")
                             ||registeredMaterial.getMaterialType().equals("Thesis Book")){
                             String type = registeredMaterial.getMaterialType();
-                            registeredMaterial.UpdateAuthoredMaterial(materialId, type);
+                            registeredMaterial.UpdateAuthoredMaterial(materialId, type);// save in txt/file
                         }
                         else if (registeredMaterial.getMaterialType().equals("Journal")
                             ||registeredMaterial.getMaterialType().equals("Magazine")){
                             String type = registeredMaterial.getMaterialType();
-                            registeredMaterial.UpdateUnauthoredMaterial(materialId, type);
+                            registeredMaterial.UpdateUnauthoredMaterial(materialId, type); // save in txt/file
                         }
      
                        
@@ -675,8 +675,11 @@ public class AssetManagement {
             }
             catch(NumberFormatException e) {
                     System.out.println("Invalid number in borrower record.");
+            }catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Incomplete material record.");
             }
        
         }
     }
+    
 }

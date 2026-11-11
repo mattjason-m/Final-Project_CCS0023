@@ -14,14 +14,15 @@ public class LibraryManagementSystem {
         //CODE ENDS HERE
         
         
-        LocalDateTime TIME = LocalDateTime.now();
-        System.out.println(TIME);
+//        LocalDateTime TIME = LocalDateTime.now();
+//        System.out.println(TIME);
+//        
+//        AssetManagement assetSystem =  new AssetManagement();
+//        assetSystem.loadAsset();
+//        assetSystem.assetManagement();
         
-        AssetManagement assetSystem =  new AssetManagement();
-        assetSystem.loadAsset();
-        assetSystem.assetManagement();
-        
-        
+        BorrowAMaterial borrowSystem = new BorrowAMaterial();
+        borrowSystem.Terminal();
 
     }
 }
