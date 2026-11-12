@@ -22,7 +22,7 @@ public class LibraryManagementSystem {
 //        assetSystem.assetManagement();
         
         BorrowAMaterial borrowSystem = new BorrowAMaterial();
-        borrowSystem.Terminal();
-
+        BookHistory bookHistory = new BookHistory(borrowSystem.borrowRecords);
+        bookHistory.bookHistory();
     }
 }
