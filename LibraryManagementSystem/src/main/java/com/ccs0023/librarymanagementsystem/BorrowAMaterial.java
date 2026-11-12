@@ -40,7 +40,13 @@ public class BorrowAMaterial {
             if (borrowPerson == null) {
                 System.out.println("Borrower not found.");
                 return;
-}
+            }
+            
+            if (borrowPerson.getViolations() >=3){
+                System.out.println("Borrower Exceeded Violation Limit.");
+                return;
+            }
+            
             String fullname = String.join(" ", borrowPerson.getFirstName(), borrowPerson.getMiddleName(), 
                     borrowPerson.getLastName());
             
