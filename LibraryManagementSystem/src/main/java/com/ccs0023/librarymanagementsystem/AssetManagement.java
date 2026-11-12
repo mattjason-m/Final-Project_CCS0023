@@ -106,7 +106,7 @@ public class AssetManagement {
             return;
         }
         
-        if (validatePositiveNumber(materialId) == false){
+        if (Validator.PositiveNumber(materialId) == false){
             System.out.println("Invalid Material ID.");
             return;
         }
@@ -118,10 +118,10 @@ public class AssetManagement {
         
         registeredMaterial.setMaterialId(materialId);
         
-        System.out.println("Enter Material Title or Name: ");
+        System.out.println("Enter Material Title or Name (Exclude ','): ");
         String title = scan.nextLine();
         
-        if (validateText(title) == false){
+        if (Validator.Text(title) == false || Validator.NoComma(title) == false){
             System.out.println("Invalid Material Title.");
             return;
         }
@@ -134,7 +134,7 @@ public class AssetManagement {
             System.out.println("Enter Author: ");
             String author = scan.nextLine();
             
-            if (validateText(author) == false){
+            if (Validator.Text(author) == false || Validator.NoComma(author) == false){
                 System.out.println("Invalid Author.");
                 return;
             }
@@ -155,7 +155,7 @@ public class AssetManagement {
             return;
         }
         
-        if (validateYear(yearPublished) == false){
+        if (Validator.Year(yearPublished) == false){
             System.out.println("Invalid Year Published.");
             return;
         }
@@ -165,7 +165,7 @@ public class AssetManagement {
         System.out.println("Enter Publisher: ");
         String publisher = scan.nextLine();
         
-        if (validateText(publisher) == false){
+        if (Validator.Text(publisher) == false || Validator.NoComma(publisher) == false){
             System.out.println("Invalid Publisher.");
             return;
         }
@@ -185,7 +185,7 @@ public class AssetManagement {
             return;
         }
         
-        if (validatePositiveNumber(totalCopies) == false){
+        if (Validator.PositiveNumber(totalCopies) == false){
             System.out.println("Invalid Number of Copies.");
             return;
         }
@@ -199,6 +199,7 @@ public class AssetManagement {
         }
         
         materials.add(registeredMaterial);
+        registeredMaterial.SaveToFile();
         
         System.out.println("New material has been successfully added to the system.");
     }
@@ -248,15 +249,15 @@ public class AssetManagement {
                 switch(choice){
                     case 1:
                         System.out.println("Edit Title or Name: ");
-                        String title = scan.nextLine();
+                        String changedTitle = scan.nextLine();
                         
-                        if (validateText(title) == false){
+                        if (Validator.Text(changedTitle) == false || Validator.NoComma(changedTitle) == false){
                             System.out.println("Invalid Title.");
                             break;
                         }
                         
                         String oldTitle = registeredMaterial.getTitle();
-                        registeredMaterial.setTitle(title);
+                        registeredMaterial.setTitle(changedTitle);//change in RAM
                         
                         if (checkDuplicateMaterial(registeredMaterial, materialId)){
                             registeredMaterial.setTitle(oldTitle);
@@ -264,6 +265,19 @@ public class AssetManagement {
                             break;
                         }
                         
+                        
+                        if (registeredMaterial.getMaterialType().equals("Book")
+                            ||registeredMaterial.getMaterialType().equals("Thesis Book")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateAuthoredMaterial(materialId, type);// save in txt/file
+                        }
+                        else if (registeredMaterial.getMaterialType().equals("Journal")
+                            ||registeredMaterial.getMaterialType().equals("Magazine")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateUnauthoredMaterial(materialId, type); // save in txt/file
+                        }
+     
+                       
                         System.out.println("Title has been updated successfully.");
                         break;
                         
@@ -272,22 +286,23 @@ public class AssetManagement {
                                 || registeredMaterial.getMaterialType().equals("Thesis Book")){
                             
                             System.out.println("Edit Author: ");
-                            String author = scan.nextLine();
+                            String changedAuthor = scan.nextLine();
                             
-                            if (validateText(author) == false){
+                            if (Validator.Text(changedAuthor) == false || Validator.NoComma(changedAuthor) == false){
                                 System.out.println("Invalid Author.");
                                 break;
                             }
                             
                             String oldAuthor = registeredMaterial.getAuthor();
-                            registeredMaterial.setAuthor(author);
+                            registeredMaterial.setAuthor(changedAuthor);
                             
                             if (checkDuplicateMaterial(registeredMaterial, materialId)){
                                 registeredMaterial.setAuthor(oldAuthor);
                                 System.out.println("Material is already registered.");
                                 break;
                             }
-                            
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateAuthoredMaterial(materialId, type);
                             System.out.println("Author has been updated successfully.");
                         }
                         else{
@@ -296,11 +311,11 @@ public class AssetManagement {
                         break;
                         
                     case 3:
-                        int yearPublished;
+                        int ChangedYearPublished;
                         
                         try{
                             System.out.println("Edit Year Published: ");
-                            yearPublished = scan.nextInt();
+                            ChangedYearPublished = scan.nextInt();
                             scan.nextLine();
                         }
                         catch(InputMismatchException e){
@@ -309,13 +324,13 @@ public class AssetManagement {
                             break;
                         }
                         
-                        if (validateYear(yearPublished) == false){
+                        if (Validator.Year(ChangedYearPublished) == false){
                             System.out.println("Invalid Year Published.");
                             break;
                         }
                         
                         int oldYear = registeredMaterial.getYearPublished();
-                        registeredMaterial.setYearPublished(yearPublished);
+                        registeredMaterial.setYearPublished(ChangedYearPublished);
                         
                         if (checkDuplicateMaterial(registeredMaterial, materialId)){
                             registeredMaterial.setYearPublished(oldYear);
@@ -323,20 +338,31 @@ public class AssetManagement {
                             break;
                         }
                         
+                        
+                        if (registeredMaterial.getMaterialType().equals("Book")
+                            ||registeredMaterial.getMaterialType().equals("Thesis Book")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateAuthoredMaterial(materialId, type);
+                        }
+                        else if (registeredMaterial.getMaterialType().equals("Journal")
+                            ||registeredMaterial.getMaterialType().equals("Magazine")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateUnauthoredMaterial(materialId, type);
+                        }
                         System.out.println("Year Published has been updated successfully.");
                         break;
                         
                     case 4:
                         System.out.println("Edit Publisher: ");
-                        String publisher = scan.nextLine();
+                        String ChangedPublisher = scan.nextLine();
                         
-                        if (validateText(publisher) == false){
+                        if (Validator.Text(ChangedPublisher) == false){
                             System.out.println("Invalid Publisher.");
                             break;
                         }
                         
                         String oldPublisher = registeredMaterial.getPublisher();
-                        registeredMaterial.setPublisher(publisher);
+                        registeredMaterial.setPublisher(ChangedPublisher);
                         
                         if (checkDuplicateMaterial(registeredMaterial, materialId)){
                             registeredMaterial.setPublisher(oldPublisher);
@@ -344,15 +370,25 @@ public class AssetManagement {
                             break;
                         }
                         
+                        if (registeredMaterial.getMaterialType().equals("Book")
+                            ||registeredMaterial.getMaterialType().equals("Thesis Book")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateAuthoredMaterial(materialId, type);
+                        }
+                        else if (registeredMaterial.getMaterialType().equals("Journal")
+                            ||registeredMaterial.getMaterialType().equals("Magazine")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateUnauthoredMaterial(materialId, type);
+                        }
                         System.out.println("Publisher has been updated successfully.");
                         break;
                         
                     case 5:
-                        int totalCopies;
+                        int ChangedTotalCopies;
                         
                         try{
                             System.out.println("Edit Total Copies: ");
-                            totalCopies = scan.nextInt();
+                            ChangedTotalCopies = scan.nextInt();
                             scan.nextLine();
                         }
                         catch(InputMismatchException e){
@@ -364,19 +400,29 @@ public class AssetManagement {
                         int borrowedCopies = registeredMaterial.getTotalCopies()
                                 - registeredMaterial.getAvailableCopies();
                         
-                        if (validatePositiveNumber(totalCopies) == false){
+                        if (Validator.PositiveNumber(ChangedTotalCopies) == false){
                             System.out.println("Invalid Number of Copies.");
                             break;
                         }
                         
-                        if (totalCopies < borrowedCopies){
+                        if (ChangedTotalCopies < borrowedCopies){
                             System.out.println("Total Copies cannot be less than borrowed copies.");
                             break;
                         }
                         
-                        registeredMaterial.setTotalCopies(totalCopies);
-                        registeredMaterial.setAvailableCopies(totalCopies - borrowedCopies);
+                        registeredMaterial.setTotalCopies(ChangedTotalCopies);
+                        registeredMaterial.setAvailableCopies(ChangedTotalCopies - borrowedCopies);
                         
+                        if (registeredMaterial.getMaterialType().equals("Book")
+                            ||registeredMaterial.getMaterialType().equals("Thesis Book")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateAuthoredMaterial(materialId, type);
+                        }
+                        else if (registeredMaterial.getMaterialType().equals("Journal")
+                            ||registeredMaterial.getMaterialType().equals("Magazine")){
+                            String type = registeredMaterial.getMaterialType();
+                            registeredMaterial.UpdateUnauthoredMaterial(materialId, type);
+                        }
                         System.out.println("Total Copies has been updated successfully.");
                         break;
                         
@@ -419,6 +465,7 @@ public class AssetManagement {
             }
             
             materials.remove(registeredMaterial);
+            registeredMaterial.RemoveMaterial(materialId);
             System.out.println("Material has been successfully removed.");
         }
         else{
@@ -532,36 +579,6 @@ public class AssetManagement {
         System.out.println();
     }
     
-    public boolean validatePositiveNumber(int number){
-        
-        if (number > 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    
-    public boolean validateYear(int yearPublished){
-        
-        if (yearPublished > 0 && yearPublished <= 2026){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    
-    public boolean validateText(String text){
-        
-        if (text.trim().isEmpty()){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    
     public boolean checkDuplicateMaterial(Material registeredMaterial, int materialId){
         
         for (Material existingMaterial : materials){
@@ -591,4 +608,77 @@ public class AssetManagement {
         
         return false;
     }
+    
+    public void loadAsset(){
+        Material registeredMaterial;
+        FileHandler FILE = new FileHandler();
+        ArrayList<String> records = FILE.readMaterials();
+        for (String record: records){
+            try {
+                String[] values = record.split(",");
+
+                if (values.length != 8 && values.length != 7 ) {
+                    System.out.println("Invalid borrower record.");
+                    continue; 
+                }
+                
+                switch (values[1]){
+                    case "Book":
+                        registeredMaterial = new Book();
+                        registeredMaterial.setMaterialId(Integer.parseInt(values[0]));
+                        registeredMaterial.setTitle(values[2]);
+                        registeredMaterial.setAuthor(values[3]);
+                        registeredMaterial.setYearPublished(Integer.parseInt(values[4]));
+                        registeredMaterial.setPublisher(values[5]);
+                        registeredMaterial.setTotalCopies(Integer.parseInt(values[6]));
+                        registeredMaterial.setAvailableCopies(Integer.parseInt(values[7]));
+                        materials.add(registeredMaterial);
+                        break;
+                    case "Journal":
+                        registeredMaterial = new Journal();
+                        registeredMaterial.setMaterialId(Integer.parseInt(values[0]));
+                        registeredMaterial.setTitle(values[2]);
+                        registeredMaterial.setYearPublished(Integer.parseInt(values[3]));
+                        registeredMaterial.setPublisher(values[4]);
+                        registeredMaterial.setTotalCopies(Integer.parseInt(values[5]));
+                        registeredMaterial.setAvailableCopies(Integer.parseInt(values[6]));
+                        materials.add(registeredMaterial);
+                        break;
+                    case "Magazine":
+                        registeredMaterial = new Magazine();
+                        registeredMaterial.setMaterialId(Integer.parseInt(values[0]));
+                        registeredMaterial.setTitle(values[2]);
+                        registeredMaterial.setYearPublished(Integer.parseInt(values[3]));
+                        registeredMaterial.setPublisher(values[4]);
+                        registeredMaterial.setTotalCopies(Integer.parseInt(values[5]));
+                        registeredMaterial.setAvailableCopies(Integer.parseInt(values[6]));
+                        materials.add(registeredMaterial);
+                        break;
+                    case "Thesis Book":
+                        registeredMaterial = new ThesisBook();
+                        registeredMaterial.setMaterialId(Integer.parseInt(values[0]));
+                        registeredMaterial.setTitle(values[2]);
+                        registeredMaterial.setAuthor(values[3]);
+                        registeredMaterial.setYearPublished(Integer.parseInt(values[4]));
+                        registeredMaterial.setPublisher(values[5]);
+                        registeredMaterial.setTotalCopies(Integer.parseInt(values[6]));
+                        registeredMaterial.setAvailableCopies(Integer.parseInt(values[7]));
+                        materials.add(registeredMaterial);
+                        break;
+                    default:
+                        System.out.println("Unknown material type.");
+                        continue;
+                    
+                }
+                    
+            }
+            catch(NumberFormatException e) {
+                    System.out.println("Invalid number in borrower record.");
+            }catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Incomplete material record.");
+            }
+       
+        }
+    }
+    
 }

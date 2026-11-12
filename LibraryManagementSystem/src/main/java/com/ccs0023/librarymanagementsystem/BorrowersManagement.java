@@ -1,10 +1,6 @@
 package com.ccs0023.librarymanagementsystem;
 //borrower ID number, first name, middle name, last name, gender, birthday, contact number, email, address, and number of violations.
 
-import java.io.FileWriter;
-import java.io.IOException;
-
-
 public class BorrowersManagement {
        private int BorrowerIdNumber;
        private String firstName;
@@ -106,12 +102,23 @@ public class BorrowersManagement {
             address = enteredAddress;
         }
         
+        public void setViolations(int enteredViolations) {
+            violations = enteredViolations;
+        }
+        
         public void addViolation(){
             violations++;
         }
         
+        public void AddRecord(){
+
+            FileHandler FILE = new FileHandler();
+            FILE.addBorrower(String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
+            birthday,contactNumber, email, address, String.valueOf(violations)));
+            
+        }
         
-        public void setRecord(int enteredID, String enteredFName, String enteredMName, String enteredLName, 
+        public void AddRecord(int enteredID, String enteredFName, String enteredMName, String enteredLName, 
                 String enteredGender, String enteredBirthday, String enteredContactNumber,String enteredEmail, String enteredAddress)
         {
             BorrowerIdNumber = enteredID;
@@ -126,7 +133,20 @@ public class BorrowersManagement {
             violations = 0;
             
             FileHandler FILE = new FileHandler();
-            FILE.addBorrower(String.join(",", String.valueOf(enteredID), enteredFName, enteredMName, enteredLName, 
-                        enteredGender, enteredBirthday, enteredContactNumber, enteredEmail, enteredAddress, String.valueOf(violations)));  
+            FILE.addBorrower(String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
+            birthday,contactNumber, email, address, String.valueOf(violations)));
         }
+        public void UpdateRecord(int enteredID){
+            FileHandler FILE = new FileHandler();
+            
+            String changedData = String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
+                                birthday,contactNumber, email, address, String.valueOf(violations));
+            FILE.BorrowerUpdate(enteredID, changedData);
+        }
+        
+        public void DeleteRecord(int enteredID){
+            FileHandler FILE = new FileHandler();
+            FILE.BorrowerDelete(enteredID);
+        }
+        
 }
