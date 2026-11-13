@@ -61,10 +61,10 @@ public class BorrowersManagement {
         public String getAddress() {
             return address;
         }
+
         public int getViolations(){ 
             return violations;
         } 
-
 
         public void setBorrowerIdNumber(int enteredID) {
             BorrowerIdNumber = enteredID;
@@ -136,12 +136,13 @@ public class BorrowersManagement {
             FILE.addBorrower(String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
             birthday,contactNumber, email, address, String.valueOf(violations)));
         }
-        public void UpdateRecord(int enteredID){
+
+        public boolean UpdateRecord(int enteredID){
             FileHandler FILE = new FileHandler();
             
             String changedData = String.join(",",String.valueOf(BorrowerIdNumber), firstName, middleName,lastName,gender,
                                 birthday,contactNumber, email, address, String.valueOf(violations));
-            FILE.BorrowerUpdate(enteredID, changedData);
+            return FILE.BorrowerUpdate(enteredID, changedData);
         }
         
         public void DeleteRecord(int enteredID){
