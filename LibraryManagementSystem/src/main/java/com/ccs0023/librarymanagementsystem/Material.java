@@ -1,4 +1,3 @@
-
 package com.ccs0023.librarymanagementsystem;
 
 public abstract class Material {
@@ -95,18 +94,18 @@ public abstract class Material {
         }
     }
     
-    public void UpdateAuthoredMaterial(int MaterialID, String type){
+    public boolean UpdateAuthoredMaterial(int MaterialID, String type){
         FileHandler FILE = new FileHandler();
         
         String ChangedData = String.join(",",String.valueOf(MaterialID), type, title, author, String.valueOf(yearPublished), publisher, String.valueOf(totalCopies), String.valueOf(availableCopies));
-        FILE.MaterialsUpdate(MaterialID, ChangedData);  
+        return FILE.MaterialsUpdate(MaterialID, ChangedData);  
     }
     
-    public void UpdateUnauthoredMaterial(int MaterialID, String type){
+    public boolean UpdateUnauthoredMaterial(int MaterialID, String type){
         FileHandler FILE = new FileHandler();
         
         String ChangedData = String.join(",",String.valueOf(MaterialID), type,title, String.valueOf(yearPublished), publisher, String.valueOf(totalCopies), String.valueOf(availableCopies));
-        FILE.MaterialsUpdate(MaterialID, ChangedData);  
+        return FILE.MaterialsUpdate(MaterialID, ChangedData);  
     }
     
     public void RemoveMaterial(int MaterialID){
