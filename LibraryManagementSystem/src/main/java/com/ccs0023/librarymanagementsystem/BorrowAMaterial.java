@@ -30,6 +30,7 @@ public class BorrowAMaterial {
         catch(InputMismatchException e){
                 System.out.println("Invalid input. Please enter a number.");
                 scan.nextLine();
+                return;
         }
         if (Validator.PositiveNumber(hihiramIDnumber) == false){
         System.out.println("Invalid Borrower ID Number.");
@@ -46,6 +47,17 @@ public class BorrowAMaterial {
                 System.out.println("Borrower Exceeded Violation Limit.");
                 return;
             }
+
+            for (BorrowBlueprint registeredRecord : borrowRecords){
+
+                if (hihiramIDnumber == registeredRecord.getBorrower().getBorrowerIdNumber()){
+
+                    if (registeredRecord.getReturned() == false){
+                        System.out.println("Borrower already has a borrowed material.");
+                        return;
+                    }
+                }
+            }
             
             String fullname = String.join(" ", borrowPerson.getFirstName(), borrowPerson.getMiddleName(), 
                     borrowPerson.getLastName());
@@ -58,6 +70,7 @@ public class BorrowAMaterial {
             catch(InputMismatchException e){
                     System.out.println("Invalid input. Please enter a number.");
                     scan.nextLine();
+                    return;
             }
             
             Material MaterialSelected = assetSystem.searchMaterial(materialID);
@@ -65,7 +78,11 @@ public class BorrowAMaterial {
                 System.out.println("Material not Found");
                 return;
             }
-            String data = String.join(",", String.valueOf(hihiramIDnumber), String.valueOf(materialID), fullname, MaterialSelected.getTitle(), Function.SetCurrentDate(), Function.SetDeadline(MaterialSelected.getMaterialType())); //initial time, final time
+
+            String data = String.join(",", String.valueOf(hihiramIDnumber), String.valueOf(materialID),
+                    fullname, MaterialSelected.getTitle(), Function.SetCurrentDate(),
+                    Function.SetDeadline(MaterialSelected.getMaterialType()), "", "false");
+
             if (SetBorrow(MaterialSelected)) {
                 addRecord(data);
                 System.out.println("Material Successfully Borrowed.");
@@ -78,6 +95,8 @@ public class BorrowAMaterial {
         
     public void loadTransactions(AssetManagement assetSystem, BorrowerInformation borrowerSystem) {
 
+    borrowRecords.clear();
+
     FileHandler FILE = new FileHandler();
     ArrayList<String> records = FILE.readTransactions();
 
@@ -85,7 +104,7 @@ public class BorrowAMaterial {
         try {
             String[] values = record.split(",", -1);
 
-            if (values.length != 6) {
+            if (values.length != 6 && values.length != 8) {
                 System.out.println("Incomplete transaction record.");
                 continue;
             }
@@ -105,6 +124,16 @@ public class BorrowAMaterial {
             BorrowBlueprint recordedTransaction = new BorrowBlueprint(
                 material, borrower, borrowDate, dueDate
             );
+
+            if (values.length == 8){
+
+                if (values[7].equals("true")){
+
+                    recordedTransaction.setReturnDate(LocalDateTime.parse(values[6]));
+                    recordedTransaction.setReturned(true);
+                }
+            }
+
             borrowRecords.add(recordedTransaction);
         } catch (NumberFormatException e) {
             System.out.println("Invalid number in transaction record.");
