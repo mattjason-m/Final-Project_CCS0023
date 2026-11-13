@@ -668,9 +668,7 @@ public class AssetManagement {
                     default:
                         System.out.println("Unknown material type.");
                         continue;
-                    
                 }
-                    
             }
             catch(NumberFormatException e) {
                     System.out.println("Invalid number in borrower record.");
