@@ -9,6 +9,9 @@ public class BorrowBlueprint {
 
     private LocalDateTime borrowDate;
     private LocalDateTime dueDate;
+    
+    private LocalDateTime returnDate;
+    private boolean returned;
 
     public BorrowBlueprint(Material material, BorrowersManagement borrower, 
             LocalDateTime BorrowDate, LocalDateTime DueDate) {
@@ -50,5 +53,20 @@ public class BorrowBlueprint {
     public void setDueDate(LocalDateTime enteredDueDate) {
         dueDate = enteredDueDate;
     }
+    
+    public LocalDateTime getReturnDate(){
+        return returnDate;
+}
 
+    public boolean getReturned(){
+        return returned;
+    }
+
+    public void setReturnDate(LocalDateTime enteredReturnDate){
+        returnDate = enteredReturnDate;
+    }
+
+    public void setReturned(boolean enteredReturned){
+        returned = enteredReturned;
+    }
 }
