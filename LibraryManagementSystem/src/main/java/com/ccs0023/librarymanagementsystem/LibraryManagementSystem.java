@@ -22,7 +22,10 @@ public class LibraryManagementSystem {
 //        assetSystem.assetManagement();
         
         BorrowAMaterial borrowSystem = new BorrowAMaterial();
-        BookHistory bookHistory = new BookHistory(borrowSystem.borrowRecords);
+        BookAndBorrowerHistory bookHistory = new BookAndBorrowerHistory();
         bookHistory.bookHistory();
+        
+        BookAndBorrowerHistory history = new BookAndBorrowerHistory();
+        history.borrowerHistory();
     }
 }
