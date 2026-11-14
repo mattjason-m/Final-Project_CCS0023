@@ -3,17 +3,25 @@ package com.ccs0023.librarymanagementsystem;
 import java.time.LocalDateTime;
 
 public class Function {
-    public static void BorrowersPrintValues(BorrowersManagement registeredBorrower){
-            System.out.println(registeredBorrower.getBorrowerIdNumber());
-            System.out.println(registeredBorrower.getFirstName());
-            System.out.println(registeredBorrower.getMiddleName());
-            System.out.println(registeredBorrower.getLastName());
-            System.out.println(registeredBorrower.getGender());
-            System.out.println(registeredBorrower.getBirthday());
-            System.out.println(registeredBorrower.getContactNumber());
-            System.out.println(registeredBorrower.getEmail());
-            System.out.println(registeredBorrower.getAddress());
-            System.out.println(registeredBorrower.getViolations());
+    
+    public static void BorrowersTableHeader() {
+        System.out.printf("%-12s %-25s %-15s %-15s %-10s %-12s %-15s %-35s %-40s %-10s%n",
+                "Borrower ID", "First Name", "Middle Name", "Last Name",
+                "Gender", "Birthday", "Contact", "Email", "Address", "Violations");
+    }
+
+    public static void BorrowersPrintValues(BorrowersManagement registeredBorrower) {
+        System.out.printf("%-12d %-25s %-15s %-15s %-10s %-12s %-15s %-35s %-40s %-10d%n",
+                registeredBorrower.getBorrowerIdNumber(),
+                registeredBorrower.getFirstName(),
+                registeredBorrower.getMiddleName(),
+                registeredBorrower.getLastName(),
+                registeredBorrower.getGender(),
+                registeredBorrower.getBirthday(),
+                registeredBorrower.getContactNumber(),
+                registeredBorrower.getEmail(),
+                registeredBorrower.getAddress(),
+                registeredBorrower.getViolations());
     }
     
     public static String capitalizer (String input){

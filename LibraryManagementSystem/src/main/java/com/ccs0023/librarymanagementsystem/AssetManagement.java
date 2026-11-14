@@ -10,15 +10,18 @@ public class AssetManagement {
     Scanner scan = new Scanner(System.in);
     int choice;
     
-    public void assetManagement(){
+    public void assetTerminal(){
         
         do{
-            System.out.println("1. Add Material");
-            System.out.println("2. Edit Material");
-            System.out.println("3. Delete Material");
-            System.out.println("4. View Material");
-            System.out.println("5. Return to Main Menu");
-            
+            System.out.println("");
+            System.out.println("----------------------------");
+            System.out.println("[1] Add Material");
+            System.out.println("[2] Edit Material");
+            System.out.println("[3] Delete Material");
+            System.out.println("[4] View Material");
+            System.out.println("[5] Return to Main Menu");
+            System.out.println("----------------------------");
+            System.out.print("Enter Option: ");
             try{
                 choice = scan.nextInt();
                 scan.nextLine();
@@ -50,18 +53,47 @@ public class AssetManagement {
         }while(true);
     }
     
+    
+    public void MaterialsTableHeader() {
+        System.out.printf("%-15s %-12s %-40s %-30s %-18s %-30s %-15s %-18s %-15s%n",
+                "Material Type", "Material ID", "Title or Name",
+                "Author", "Year Published", "Publisher",
+                "Total Copies", "Available Copies", "Borrowing Days");
+    }
+
+    public void MaterialsPrintValues(Material registeredMaterial) {
+
+        String author = "N/A";
+
+        if (registeredMaterial.getMaterialType().equals("Book")
+                || registeredMaterial.getMaterialType().equals("Thesis Book")) {
+            author = registeredMaterial.getAuthor();
+        }
+
+        System.out.printf("%-15s %-12d %-40s %-30s %-18d %-30s %-15d %-18d %-15d%n",
+                registeredMaterial.getMaterialType(),
+                registeredMaterial.getMaterialId(),
+                registeredMaterial.getTitle(),
+                author,
+                registeredMaterial.getYearPublished(),
+                registeredMaterial.getPublisher(),
+                registeredMaterial.getTotalCopies(),
+                registeredMaterial.getAvailableCopies(),
+                registeredMaterial.getBorrowingDays());
+    }
+
     public void addMaterial(){
         
         int materialType;
         
         try{
             System.out.println("Select Material Type");
-            System.out.println("1. Book");
-            System.out.println("2. Journal");
-            System.out.println("3. Magazine");
-            System.out.println("4. Thesis Book");
-            System.out.println("5. Return to Asset Management");
-            
+            System.out.println("[1] Book");
+            System.out.println("[2] Journal");
+            System.out.println("[3] Magazine");
+            System.out.println("[4] Thesis Book");
+            System.out.println("[5] Return to Asset Management");
+            System.out.print("Enter Choice: ");
             materialType = scan.nextInt();
             scan.nextLine();
         }
@@ -96,7 +128,7 @@ public class AssetManagement {
         int materialId;
         
         try{
-            System.out.println("Enter Material ID: ");
+            System.out.print("Enter Material ID: ");
             materialId = scan.nextInt();
             scan.nextLine();
         }
@@ -118,7 +150,7 @@ public class AssetManagement {
         
         registeredMaterial.setMaterialId(materialId);
         
-        System.out.println("Enter Material Title or Name (Exclude ','): ");
+        System.out.print("Enter Material Title or Name (Exclude ','): ");
         String title = scan.nextLine();
         
         if (Validator.Text(title) == false || Validator.NoComma(title) == false){
@@ -131,7 +163,7 @@ public class AssetManagement {
         if (registeredMaterial.getMaterialType().equals("Book")
                 || registeredMaterial.getMaterialType().equals("Thesis Book")){
             
-            System.out.println("Enter Author: ");
+            System.out.print("Enter Author: ");
             String author = scan.nextLine();
             
             if (Validator.Text(author) == false || Validator.NoComma(author) == false){
@@ -145,7 +177,7 @@ public class AssetManagement {
         int yearPublished;
         
         try{
-            System.out.println("Enter Year Published: ");
+            System.out.print("Enter Year Published: ");
             yearPublished = scan.nextInt();
             scan.nextLine();
         }
@@ -162,7 +194,7 @@ public class AssetManagement {
         
         registeredMaterial.setYearPublished(yearPublished);
         
-        System.out.println("Enter Publisher: ");
+        System.out.print("Enter Publisher: ");
         String publisher = scan.nextLine();
         
         if (Validator.Text(publisher) == false || Validator.NoComma(publisher) == false){
@@ -175,7 +207,7 @@ public class AssetManagement {
         int totalCopies;
         
         try{
-            System.out.println("Enter Total Copies: ");
+            System.out.print("Enter Total Copies: ");
             totalCopies = scan.nextInt();
             scan.nextLine();
         }
@@ -209,7 +241,7 @@ public class AssetManagement {
         int materialId;
         
         try{
-            System.out.println("Enter Material ID Number to be Edited: ");
+            System.out.print("Enter Material ID Number to be Edited: ");
             materialId = scan.nextInt();
             scan.nextLine();
         }
@@ -226,17 +258,17 @@ public class AssetManagement {
             do{
                 System.out.println("Edit Material Information");
                 System.out.println("Material ID: " + materialId);
-                System.out.println("1. Edit Title or Name");
-                System.out.println("2. Edit Author");
-                System.out.println("3. Edit Year Published");
-                System.out.println("4. Edit Publisher");
-                System.out.println("5. Edit Total Copies");
-                System.out.println("6. Return to Asset Management");
+                System.out.println("[1] Edit Title or Name");
+                System.out.println("[2] Edit Author");
+                System.out.println("[3] Edit Year Published");
+                System.out.println("[4] Edit Publisher");
+                System.out.println("[5] Edit Total Copies");
+                System.out.println("[6] Return to Asset Management");
                 
                 int choice;
                 
                 try{
-                    System.out.println("Enter Choice: ");
+                    System.out.print("Enter Choice: ");
                     choice = scan.nextInt();
                     scan.nextLine();
                 }
@@ -248,7 +280,7 @@ public class AssetManagement {
                 
                 switch(choice){
                     case 1:
-                        System.out.println("Edit Title or Name: ");
+                        System.out.print("Edit Title or Name: ");
                         String changedTitle = scan.nextLine();
                         
                         if (Validator.Text(changedTitle) == false || Validator.NoComma(changedTitle) == false){
@@ -285,7 +317,7 @@ public class AssetManagement {
                         if (registeredMaterial.getMaterialType().equals("Book")
                                 || registeredMaterial.getMaterialType().equals("Thesis Book")){
                             
-                            System.out.println("Edit Author: ");
+                            System.out.print("Edit Author: ");
                             String changedAuthor = scan.nextLine();
                             
                             if (Validator.Text(changedAuthor) == false || Validator.NoComma(changedAuthor) == false){
@@ -314,7 +346,7 @@ public class AssetManagement {
                         int ChangedYearPublished;
                         
                         try{
-                            System.out.println("Edit Year Published: ");
+                            System.out.print("Edit Year Published: ");
                             ChangedYearPublished = scan.nextInt();
                             scan.nextLine();
                         }
@@ -353,7 +385,7 @@ public class AssetManagement {
                         break;
                         
                     case 4:
-                        System.out.println("Edit Publisher: ");
+                        System.out.print("Edit Publisher: ");
                         String ChangedPublisher = scan.nextLine();
                         
                         if (Validator.Text(ChangedPublisher) == false){
@@ -387,7 +419,7 @@ public class AssetManagement {
                         int ChangedTotalCopies;
                         
                         try{
-                            System.out.println("Edit Total Copies: ");
+                            System.out.print("Edit Total Copies: ");
                             ChangedTotalCopies = scan.nextInt();
                             scan.nextLine();
                         }
@@ -445,7 +477,7 @@ public class AssetManagement {
         int materialId;
         
         try{
-            System.out.println("Enter Material ID Number to be Deleted: ");
+            System.out.print("Enter Material ID Number to be Deleted: ");
             materialId = scan.nextInt();
             scan.nextLine();
         }
@@ -478,10 +510,11 @@ public class AssetManagement {
         int choice;
         
         do{
-            System.out.println("View Material");
-            System.out.println("1. View All Materials");
-            System.out.println("2. View Specific Material");
-            System.out.println("3. Return to Asset Management");
+            System.out.println("\nView Material");
+            System.out.println("[1] View All Materials");
+            System.out.println("[2] View Specific Material");
+            System.out.println("[3] Return to Asset Management");
+            System.out.print("Enter Choice: ");
             
             try{
                 choice = scan.nextInt();
@@ -509,17 +542,18 @@ public class AssetManagement {
         }while(true);
     }
     
-    public void viewAllMaterial(){
-        
-        System.out.println("All Records of Registered Materials");
-        
-        if (materials.isEmpty()){
+    public void viewAllMaterial() {
+        System.out.println("\nAll Records of Registered Materials");
+
+        if (materials.isEmpty()) {
             System.out.println("No registered materials found.");
             return;
         }
-        
-        for (Material registeredMaterial : materials){
-            displayMaterial(registeredMaterial);
+
+        MaterialsTableHeader();
+
+        for (Material registeredMaterial : materials) {
+            MaterialsPrintValues(registeredMaterial);
         }
     }
     
@@ -540,7 +574,7 @@ public class AssetManagement {
         int materialId;
         
         try{
-            System.out.println("Enter Material ID to View: ");
+            System.out.print("Enter Material ID to View: ");
             materialId = scan.nextInt();
             scan.nextLine();
         }
@@ -553,6 +587,7 @@ public class AssetManagement {
         Material registeredMaterial = searchMaterial(materialId);
         
         if (registeredMaterial != null){
+            System.out.println();
             displayMaterial(registeredMaterial);
         }
         else{
@@ -560,24 +595,11 @@ public class AssetManagement {
         }
     }
     
-    public void displayMaterial(Material registeredMaterial){
-        
-        System.out.println("Material Type: " + registeredMaterial.getMaterialType());
-        System.out.println("Material ID: " + registeredMaterial.getMaterialId());
-        System.out.println("Title or Name: " + registeredMaterial.getTitle());
-        
-        if (registeredMaterial.getMaterialType().equals("Book")
-                || registeredMaterial.getMaterialType().equals("Thesis Book")){
-            System.out.println("Author: " + registeredMaterial.getAuthor());
-        }
-        
-        System.out.println("Year Published: " + registeredMaterial.getYearPublished());
-        System.out.println("Publisher: " + registeredMaterial.getPublisher());
-        System.out.println("Total Copies: " + registeredMaterial.getTotalCopies());
-        System.out.println("Available Copies: " + registeredMaterial.getAvailableCopies());
-        System.out.println("Borrowing Days: " + registeredMaterial.getBorrowingDays());
-        System.out.println();
+    public void displayMaterial(Material registeredMaterial) {
+        MaterialsTableHeader();
+        MaterialsPrintValues(registeredMaterial);
     }
+    
     
     public boolean checkDuplicateMaterial(Material registeredMaterial, int materialId){
         

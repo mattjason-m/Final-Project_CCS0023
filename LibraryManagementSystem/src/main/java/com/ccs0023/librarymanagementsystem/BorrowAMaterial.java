@@ -7,8 +7,6 @@ import java.util.Scanner;
 
 
 public class BorrowAMaterial {
-    ArrayList<Material> materials = new ArrayList<>();
-    ArrayList<BorrowersManagement> borrower = new ArrayList<>();
     ArrayList<BorrowBlueprint> borrowRecords = new ArrayList<>();
     Scanner scan = new Scanner(System.in);
     
@@ -20,11 +18,11 @@ public class BorrowAMaterial {
         borrowerSystem.loadBorrowers();
         loadTransactions(assetSystem, borrowerSystem);
         
-        int hihiramIDnumber = 0, materialID = 0;
+        int borrowerIDnumber = 0, materialID = 0;
  
         System.out.print("Enter Borrower ID Number:");
         try{
-            hihiramIDnumber = scan.nextInt();
+            borrowerIDnumber = scan.nextInt();
             scan.nextLine();
         }
         catch(InputMismatchException e){
@@ -32,12 +30,12 @@ public class BorrowAMaterial {
                 scan.nextLine();
                 return;
         }
-        if (Validator.PositiveNumber(hihiramIDnumber) == false){
+        if (Validator.PositiveNumber(borrowerIDnumber) == false){
         System.out.println("Invalid Borrower ID Number.");
         return;
         }
        
-            BorrowersManagement borrowPerson = borrowerSystem.searchBorrower(hihiramIDnumber);
+            BorrowersManagement borrowPerson = borrowerSystem.searchBorrower(borrowerIDnumber);
             if (borrowPerson == null) {
                 System.out.println("Borrower not found.");
                 return;
@@ -50,7 +48,7 @@ public class BorrowAMaterial {
 
             for (BorrowBlueprint registeredRecord : borrowRecords){
 
-                if (hihiramIDnumber == registeredRecord.getBorrower().getBorrowerIdNumber()){
+                if (borrowerIDnumber == registeredRecord.getBorrower().getBorrowerIdNumber()){
 
                     if (registeredRecord.getReturned() == false){
                         System.out.println("Borrower already has a borrowed material.");
@@ -66,7 +64,7 @@ public class BorrowAMaterial {
             try{
                 materialID = scan.nextInt();
                 scan.nextLine();
-            }//GET ASSET ID NUMBER NADUDULING AKO
+            }//GET ASSET ID NUMBER 
             catch(InputMismatchException e){
                     System.out.println("Invalid input. Please enter a number.");
                     scan.nextLine();
@@ -79,7 +77,7 @@ public class BorrowAMaterial {
                 return;
             }
 
-            String data = String.join(",", String.valueOf(hihiramIDnumber), String.valueOf(materialID),
+            String data = String.join(",", String.valueOf(borrowerIDnumber), String.valueOf(materialID),
                     fullname, MaterialSelected.getTitle(), Function.SetCurrentDate(),
                     Function.SetDeadline(MaterialSelected.getMaterialType()), "", "false");
 
@@ -114,8 +112,13 @@ public class BorrowAMaterial {
             BorrowersManagement borrower = borrowerSystem.searchBorrower(borrowerID);
             Material material = assetSystem.searchMaterial(materialID);
 
-            if (borrower == null || material == null) {
-                System.out.println("Borrower or material not found.");
+            if (borrower == null) {
+                System.out.println("Missing Borrower ID: " + borrowerID);
+                continue;   
+            }
+
+            if (material == null) {
+                System.out.println("Missing Material ID: " + materialID);
                 continue;
             }
             LocalDateTime borrowDate = LocalDateTime.parse(values[4]);

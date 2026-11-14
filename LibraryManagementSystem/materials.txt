@@ -1,4 +1,0 @@
-1214,Journal,qwer,1990,Phoenix publishing Inc.,3,3
-1231,Thesis Book,w234,fwe3-5,2012,1234ce,100,99
-12314,Magazine,WODJ,1400,QWDOI01924U00)*&41,1,0
-342,Magazine,Time,2003,Phoenix ,2,2

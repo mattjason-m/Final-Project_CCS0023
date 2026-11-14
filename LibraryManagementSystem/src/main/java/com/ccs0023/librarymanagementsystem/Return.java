@@ -14,10 +14,8 @@ public class Return {
 
         AssetManagement assetSystem = new AssetManagement();
         assetSystem.loadAsset();
-
         BorrowerInformation borrowerSystem = new BorrowerInformation();
         borrowerSystem.loadBorrowers();
-
         BorrowAMaterial borrowSystem = new BorrowAMaterial();
         borrowSystem.loadTransactions(assetSystem, borrowerSystem);
 
@@ -25,7 +23,7 @@ public class Return {
 
         int borrowerIdNumber;
 
-        System.out.println("Enter Borrower ID Number: ");
+        System.out.print("Enter Borrower ID Number: ");
 
         try{
             borrowerIdNumber = scan.nextInt();
@@ -46,7 +44,7 @@ public class Return {
 
         int materialID;
 
-        System.out.println("Enter Material ID Number: ");
+        System.out.print("Enter Material ID Number: ");
 
         try{
             materialID = scan.nextInt();

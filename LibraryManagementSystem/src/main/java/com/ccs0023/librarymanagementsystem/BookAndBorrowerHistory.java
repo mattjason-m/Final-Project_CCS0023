@@ -29,7 +29,7 @@ public class BookAndBorrowerHistory {
 
         int borrowerIdNumber;
 
-        System.out.println("Enter Borrower ID Number: ");
+        System.out.print("Enter Borrower ID Number: ");
 
         try{
             borrowerIdNumber = scan.nextInt();
@@ -71,7 +71,7 @@ public class BookAndBorrowerHistory {
 
         int materialID;
 
-        System.out.println("Enter Material ID Number: ");
+        System.out.print("Enter Material ID Number: ");
 
         try{
             materialID = scan.nextInt();
